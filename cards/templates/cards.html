@@ -1,0 +1,11 @@
+{% extends "main.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <p>User: {{ user.first_name }} {{ user.last_name }} | Email: {{ user.email }}</p>
+        <p><a href="{% url 'logout' %}">Logout</a></p>
+    {% else %}
+        <p><a href="{% url 'login' %}">Login</a></p>
+        <p><a href="{% url 'registration' %}">Registration</a></p>
+    {% endif %}
+{% endblock content %}
