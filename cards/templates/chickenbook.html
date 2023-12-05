@@ -1,0 +1,22 @@
+{% extends "main.html" %}
+
+{% block content %}
+   <table class='table table-zebra table-lg'>
+      <thead>
+         <tr>
+            <th>Email</th>
+            <th>Meno</th>
+            <th>Priezvisko</th>
+         </tr>
+      </thead>
+      <tbody>
+         {% for card in cards %}
+         <tr> 
+            <td>{{ card.email }}</td>
+            <td>{{ card.first_name }}</td>
+            <td>{{ card.last_name }}</td>
+         </tr>
+         {% endfor %}
+      </tbody>
+   </table>
+{% endblock content %}

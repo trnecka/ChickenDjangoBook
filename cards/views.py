@@ -1,14 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.views import View
+from accounts.models import User
 
 # Create your views here.
 
 # def homepage(request):
 #     return HttpResponse('Main Page')
 
-class HomepageView(View):
-    template_name = 'cards.html'
-    
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+def chicken_book(request):
+    cards = User.objects.all()
+    print(cards)
+    context = {'cards': cards }
+    return render(request, 'chickenbook.html', context)
+
+def user_profile(request):
+    context = {}
+    return render(request, 'profile.html', context)
