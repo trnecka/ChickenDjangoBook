@@ -5,20 +5,25 @@
       <thead>
          <tr>
             <th>Email</th>
-            <th>Meno</th>
-            <th>Priezvisko</th>
+            <th>First Name</th>
+            <th>Second Name</th>
+            <th>Phone Number</th>
+            <th>About</th>
+            <th>Is Visible</th>
          </tr>
       </thead>
       <tbody>
          {% for card in cards %}
-         <tr> 
-            <td>{{ card.email }}</td>
-            <td>{{ card.first_name }}</td>
-            <td>{{ card.last_name }}</td>
-            <td>{{ card.phone_number }}</td>
-            <td>{{ card.about }}</td>
-            <td>{{ card.is_visible }}</td>
-         </tr>
+            {% if card.is_visible %}
+               <tr> 
+                  <td>{{ card.email }}</td>
+                  <td>{{ card.first_name }}</td>
+                  <td>{{ card.last_name }}</td>
+                  <td>{{ card.phone_number }}</td>
+                  <td>{{ card.about }}</td>
+                  <td>{{ card.is_visible }}</td>
+               </tr>
+            {% endif %}
          {% endfor %}
       </tbody>
    </table>
