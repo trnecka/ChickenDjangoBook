@@ -1,0 +1,30 @@
+{% extends "main.html" %}
+
+{% block content %}
+   <table class='table table-zebra table-lg'>
+      <thead>
+         <tr>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Second Name</th>
+            <th>Phone Number</th>
+            <th>About</th>
+            <th>Is Visible</th>
+         </tr>
+      </thead>
+      <tbody>
+         {% for card in cards %}
+            {% if card.is_visible %}
+               <tr> 
+                  <td>{{ card.email }}</td>
+                  <td>{{ card.first_name }}</td>
+                  <td>{{ card.last_name }}</td>
+                  <td>{{ card.phone_number }}</td>
+                  <td>{{ card.about }}</td>
+                  <td>{{ card.is_visible }}</td>
+               </tr>
+            {% endif %}
+         {% endfor %}
+      </tbody>
+   </table>
+{% endblock content %}

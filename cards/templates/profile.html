@@ -1,0 +1,26 @@
+{% extends "main.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <form method="post" action=""{% url 'user_profile' %}"" class="mb-4 form-control">
+    {% csrf_token %}    
+        {{ infoform }}
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+    </form>
+    <table class='table table-zebra table-lg'>
+        <tbody>
+            <tr> 
+                <td>{{ card.email }}</td>
+                <td>{{ card.first_name }}</td>
+                <td>{{ card.last_name }}</td>
+                <td>{{ card.phone_number }}</td>
+                <td>{{ card.about }}</td>
+                <td>{{ card.is_visible }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% else %}
+        <p><a href="{% url 'login' %}">Login</a></p>
+        <p><a href="{% url 'registration' %}">Registration</a></p>
+    {% endif %}
+{% endblock content %}

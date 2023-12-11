@@ -2,7 +2,7 @@
 name = "chickendjangobook"
 version = "0.1.0"
 description = ""
-authors = ["Jiří Trnečka <trnecka.jiri@gmail.com>"]
+authors = ["Jiří Trnečka <trnecka.jiri@gmail.com>", "Vladimír Šabík <anaberrantis@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -10,6 +10,10 @@ python = "^3.12"
 django = "^4.2.7"
 python-dotenv = "^1.0.0"
 
+[tool.poetry.group.dev.dependencies]
+pytest-django = "^4.7.0"
+pytest-factoryboy = "^2.6.0"
+faker = "^20.1.0"
 
 [build-system]
 requires = ["poetry-core"]
