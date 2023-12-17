@@ -8,3 +8,9 @@ register(UserFactory)
 def new_user1(db, user_factory):
     user = user_factory.create()
     return user
+
+    
+    
+
+    
+    
