@@ -1,34 +1,113 @@
 <!DOCTYPE html>
 {% load static %}
-<html>
+<html lang="en" data-bs-theme="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Django Chicken Book</title>
 
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous"
+        />
         <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
 
 
     </head>
-    <body class="mx-auto max-w-screen-xl p-4">
-        <nav class="p-4 text-white flex justify-between items-center">
-            <div>
-                <a href="{% url 'chicken-book' %}" class="text-xl font-bold">chickenBook.</a>
+    <body class="vh-100">
+        <nav class="navbar bg-light navbar-expand-lg navbar-light bg-transparent">
+            <div class="container">
+              <a class="navbar-brand fs-4" href="/"
+                >chicken<b class="h2">Book.</b></a
+              >
+              <button
+                class="navbar-toggler shadow-none border-0"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div
+                class="sidebar offcanvas offcanvas-start"
+                tabindex="-1"
+                id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel"
+              >
+                <div class="offcanvas-header text-dark border-bottom border-dark">
+                  <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+                    <a class="navbar-brand fs-4" href="/"
+                      >vladimir<b class="h2">Sabik.</b></a
+                    >
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <!--SidebarBody-->
+                <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 p-lg-0">
+                  <ul
+                    class="navbar-nav justify-content-start align-items-center flex-grow-1 pe-3"
+                  >
+                    <li class="nav-item mx-2">
+                      <div class="form-check form-switch">
+                      </div>
+                    </li>
+                  </ul>
+                  <!-- Login/Sign Up-->
+                  <div
+                    class="d-flex justify-content-center align-items-center flex-column flex-lg-row gap-3"
+                  >
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'user_profile' %}" class="mr-4 nav-item nav-link">Logged as {{ user.first_name }} {{ user.last_name }} &nbsp;|</a>
+                    <a href="{% url 'user_profile' %}" class="mr-4 nav-item nav-link">Profile</a>
+                    <a href="{% url 'logout' %}" class="nav-item nav-link" id="'logout"
+                      >Log out</a
+                    >
+                    {% else %}
+                    <a href="{% url 'login' %}" class="nav-item nav-link" id="'login">Log in</a>
+                    <a
+                      href="{% url 'registration' %}"
+                      class="text-light text-decoration-none px-3 py-1 rounded-2 border border-light"
+                      id="signUp"
+                      >Sign Up</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="flex">
-                {% if user.is_authenticated %}
-                    <p>Logged as {{ user.first_name }} {{ user.last_name }} |&nbsp;</p>
-                    <a href="{% url 'user_profile' %}" class="mr-4">Profile</a>
-                    <a href="{% url 'logout' %}">Logout</a>
-                {% else %}
-                    <a href="{% url 'registration' %}" class="mr-4">Sign In</a>
-                    <a href="{% url 'login' %}">Login</a>
-                {% endif %}
+          </nav>
+          {% if messages %}
+          {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible alert-success fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        </nav>
+          {% endfor %}
+        {% endif %}
+        <div class="container">
         {% block content %}
         {% endblock %}
+        </div>
+
+        <script
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"
+        ></script>
+        <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"
+        ></script>
+
     </body>
 </html>
