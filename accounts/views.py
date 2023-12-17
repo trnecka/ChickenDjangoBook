@@ -24,10 +24,11 @@ class LoginView(TemplateView):
             login(request, user)
             messages.success(request, 'Login successfully')
             return redirect('cards')
-        messages.error(request, 'Wrong credentials')
+        messages.success(request, 'Wrong credentials')
         return redirect('login')
     
-class LogoutView(View):
-    def get(self, request, *args, **kwargs):
-        logout(request)
-        return redirect('cards')
+# class LogoutView(View):
+#     def get(self, request, *args, **kwargs):
+#         logout(request)
+#         messages.success(request, 'Logout Successfully !')
+#         return redirect('cards')
