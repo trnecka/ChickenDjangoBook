@@ -9,6 +9,11 @@ class RegistrationFormView(CreateView):
     form_class = RegistrationForm
     success_url = reverse_lazy('login')
     
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Account created successfully! Now you can log in :)')
+        return response
+    
 class CustomLoginView(LoginView):
     template_name = 'login.html'
     form_class = CustomAuthenticationForm
