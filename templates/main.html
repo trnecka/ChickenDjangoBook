@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+
 <html lang="en" data-bs-theme="dark">
     <head>
         <meta charset="UTF-8" />
@@ -87,10 +88,12 @@
           </nav>
           {% if messages %}
           {% for message in messages %}
+          <div class="container">
             <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible alert-success fade show" role="alert">
               {{ message }}
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+          </div>
           {% endfor %}
         {% endif %}
         
