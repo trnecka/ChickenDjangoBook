@@ -1,12 +1,8 @@
-from django.shortcuts import redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm
-from django.views.generic import CreateView, TemplateView, View
+from django.views.generic import CreateView
 from django.urls import reverse_lazy
-from accounts.models import User
 from accounts.forms import RegistrationForm, CustomAuthenticationForm
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 
 class RegistrationFormView(CreateView):
     template_name = 'registration.html'
