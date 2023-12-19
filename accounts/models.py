@@ -37,6 +37,9 @@ class User(AbstractUser):
     about = models.TextField(max_length=1000, blank=True, null=True)
     is_visible = models.BooleanField(default=False)
     profile_image = models.ImageField(default='default-avatar.png', upload_to='users', null=True, blank=True)
+    location = models.CharField(max_length=100, blank=True, null=True)
+    work_focus = models.CharField(max_length=100, blank=True, null=True)
+    
     
     # Zmensovanie img
     # def save(self, *args, **kwargs):
