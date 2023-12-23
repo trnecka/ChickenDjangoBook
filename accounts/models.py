@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from PIL import Image
 
 
 class UserManager(BaseUserManager):
@@ -33,8 +34,22 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=100)
     # user info
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    about = models.CharField(max_length=1000, blank=True, null=True)
+    about = models.TextField(max_length=1000, blank=True, null=True)
     is_visible = models.BooleanField(default=False)
+    profile_image = models.ImageField(default='default-avatar.png', upload_to='users', null=True, blank=True)
+    location = models.CharField(max_length=100, blank=True, null=True)
+    work_focus = models.CharField(max_length=100, blank=True, null=True)
+    
+    
+    # Zmensovanie img
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #     SIZE = 150, 150
+
+    #     if self.profile_image:
+    #         image = Image.open(self.profile_image.path)
+    #         image.thumbnail(SIZE, Image.LANCZOS)
+    #         image.save(self.profile_image.path)
     
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
