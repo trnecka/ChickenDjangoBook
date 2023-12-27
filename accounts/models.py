@@ -3,6 +3,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from PIL import Image
+import os
 
 
 class UserManager(BaseUserManager):
@@ -42,14 +43,27 @@ class User(AbstractUser):
     
     
     # Zmensovanie img
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #     SIZE = 150, 150
+    def save(self, *args, **kwargs):
+        try:
+            old_image_path = User.objects.get(pk=self.id).profile_image.path
+            if os.path.isfile(old_image_path):
+                os.remove(old_image_path)
+        except User.DoesNotExist:
+            pass
+        
+        super().save(*args, **kwargs)
+        
+        img = Image.open(self.profile_image.path)
+        if img.width > 150 or img.width > 150:
+            output_size = (150, 150)
+            img.thumbnail(output_size)
+            img.save(self.profile_image.path)
+        # SIZE = 150, 150
 
-    #     if self.profile_image:
-    #         image = Image.open(self.profile_image.path)
-    #         image.thumbnail(SIZE, Image.LANCZOS)
-    #         image.save(self.profile_image.path)
+        # if self.profile_image:
+        #     image = Image.open(self.profile_image.path)
+        #     image.thumbnail(SIZE, Image.LANCZOS)
+        #     image.save(self.profile_image.path)
     
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
