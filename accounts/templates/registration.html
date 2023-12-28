@@ -7,9 +7,7 @@
         <h2>Registration Form</h2>
         <form method="post">
             {% csrf_token %}
-            <table>
-                {{ form|crispy }}   
-            </table>
+            {{ form|crispy }}   
             <button type="submit" class="btn btn-success btn-block w-100">Registration</button>
         </form>
     </div>
