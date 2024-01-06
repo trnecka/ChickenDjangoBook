@@ -44,10 +44,13 @@ class User(AbstractUser):
     
     # Zmensovanie img
     def save(self, *args, **kwargs):
+        
         try:
-            old_image_path = User.objects.get(pk=self.id).profile_image.path
-            if os.path.isfile(old_image_path):
-                os.remove(old_image_path)
+            old_image = User.objects.get(pk=self.pk).profile_image
+            if old_image.name != 'default-avatar.png':
+                old_image_path = os.path.join('media', old_image.name)
+                if os.path.isfile(old_image_path):
+                    os.remove(old_image_path)
         except User.DoesNotExist:
             pass
         
@@ -58,12 +61,6 @@ class User(AbstractUser):
             output_size = (150, 150)
             img.thumbnail(output_size)
             img.save(self.profile_image.path)
-        # SIZE = 150, 150
-
-        # if self.profile_image:
-        #     image = Image.open(self.profile_image.path)
-        #     image.thumbnail(SIZE, Image.LANCZOS)
-        #     image.save(self.profile_image.path)
     
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
