@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from accounts.models import User
+from accounts.models import User, Skill
 from cards.forms import UserInfoForm
 from django.contrib import messages
 
@@ -13,11 +13,13 @@ def chicken_book(request):
 def user_profile(request):
     user_instance = request.user
     card = User.objects.get(pk=request.user.id)
+    all_skills = Skill.objects.all()
     
     if request.method == 'POST':
         print(request.POST)
         form = UserInfoForm(request.POST, request.FILES, instance=user_instance)
         if form.is_valid():
+            user_instance.skills.set(form.cleaned_data['skills']) # SKILLS
             form.save()
             messages.error(request, 'Profile update successfully !')  
             return redirect('user_profile')
@@ -28,7 +30,8 @@ def user_profile(request):
     
     context = {
         'infoform': form, 
-        'card': card
+        'card': card,
+        'all_skills': all_skills # SKILLS
         }
             
     return render(request, 'profile.html', context)

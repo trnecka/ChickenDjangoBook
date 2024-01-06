@@ -29,6 +29,13 @@ class UserManager(BaseUserManager):
         return user
 
 
+class Skill(models.Model):
+    
+    name = models.CharField(max_length=100)
+    
+    def __str__(self) -> str:
+        return self.name
+
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=100)
@@ -40,11 +47,13 @@ class User(AbstractUser):
     profile_image = models.ImageField(default='default-avatar.png', upload_to='users', null=True, blank=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     work_focus = models.CharField(max_length=100, blank=True, null=True)
+    skills = models.ManyToManyField(Skill, blank=True) # SKILLS MANY TO MANY AJAJAJ
     
     
     # Zmensovanie img
     def save(self, *args, **kwargs):
         
+        # mazanie stareho img
         try:
             old_image = User.objects.get(pk=self.pk).profile_image
             if old_image.name != 'default-avatar.png':

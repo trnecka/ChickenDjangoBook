@@ -24,23 +24,3 @@ class CustomLoginView(LoginView):
         messages.success(self.request, 'Login successful!')
         return response
     
-# class LoginView(TemplateView):
-#     template_name = 'login.html'
-#     form_class = AuthenticationForm
-    
-#     def post(self, request, *args, **kwargs):
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         user = authenticate(request, username=username, password=password)
-#         if user:
-#             login(request, user)
-#             messages.success(request, 'Login successfully')
-#             return redirect('cards')
-#         messages.success(request, 'Wrong credentials')
-#         return redirect('login')
-    
-# class LogoutView(View):
-#     def get(self, request, *args, **kwargs):
-#         logout(request)
-#         messages.success(request, 'Logout Successfully !')
-#         return redirect('cards')
