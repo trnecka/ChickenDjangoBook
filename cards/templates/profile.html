@@ -18,7 +18,7 @@
                     <form method="post" action="{% url 'user_profile' %}" enctype="multipart/form-data">
                         {% csrf_token %}    
                         {{ infoform|crispy }}
-                        <button type="submit" class="btn btn-primary">Save profile</button>
+                        <button type="submit" name="infoform" class="btn btn-primary">Save profile</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
@@ -37,7 +37,7 @@
                     <form method="post" action="{% url 'user_profile' %}">
                         {% csrf_token %}  
                         {{ skillform|crispy }}
-                        <button type="submit" class="btn btn-primary">Save Skill</button>
+                        <button type="submit" name="skillform" class="btn btn-primary">Save Skill</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </form>
                 </div>
@@ -64,13 +64,6 @@
                     data-bs-target="#profileForm"
                     class="btn btn-primary ms-1"
                     >Edit profile</button>
-                <button 
-                    hx-target="#skillForm"
-                    hx-trigger="click"
-                    data-bs-toggle="modal"
-                    data-bs-target="#skillForm"
-                    class="btn btn-primary ms-1"
-                    >Edit skills</button>
                 <button type="button" class="btn btn-outline-primary ms-1">Message</button>
                 </div>
             </div>
@@ -154,9 +147,26 @@
             <div class="row">
             <div class="col-md-6">
                 <div class="card mb-4 mb-md-0">
-                <div class="card-body">
-                    <p class="mb-4"><span class="font-italic me-1">SKILLS</span>
-                    </p>
+                    <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-4"><span class="font-italic me-1">SKILLS</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <button
+                            hx-target="#skillForm"
+                            hx-trigger="click"
+                            data-bs-toggle="modal"
+                            data-bs-target="#skillForm"
+                            class="btn btn-primary ms-1"
+                            >
+                            Add skill
+                            </button>
+                        </div>
+                    </div>
+
                     <div hx-get="{% url 'skill_list' %}" hx-trigger="load">loading...
                     </div>
                 </div>

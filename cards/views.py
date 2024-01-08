@@ -21,29 +21,31 @@ def user_profile(request):
     user_instance = request.user
     card = User.objects.get(pk=user_instance.id)
     
+    info_form = UserInfoForm(instance=user_instance)
+    skill_form = UserSkillForm()
+    
     if request.method == 'POST':
-        if 'info_form' in request.POST:
-            form = UserInfoForm(request.POST, request.FILES, instance=user_instance)
-            if form.is_valid():
-                form.save()
+        if 'infoform' in request.POST:
+            info_form = UserInfoForm(request.POST, request.FILES, instance=user_instance)
+            if info_form.is_valid():
+                info_form.save()
                 messages.success(request, 'Profile update successfully !')  
                 return redirect('user_profile')
             else:
-                print(form.errors)  
-        elif 'skill_form' in request.POST:
-            skill_form = UserSkillForm(request.POST, instance=user_instance)
+                print(info_form.errors)  
+        elif 'skillform' in request.POST:
+            skill_form = UserSkillForm(request.POST)
             if skill_form.is_valid():
+                skill_form.instance.user = user_instance
                 skill_form.save()
+                print(request.POST)
                 messages.success(request, 'Skill added !')
                 return redirect('user_profile')      
             else:
                 print(skill_form.errors)
-    else:
-        form = UserInfoForm(instance=user_instance)
-        skill_form = UserSkillForm(instance=user_instance)
     
     context = {
-        'infoform': form, 
+        'infoform': info_form, 
         'skillform': skill_form,
         'card': card,
     }
