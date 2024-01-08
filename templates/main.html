@@ -107,6 +107,12 @@
           <p class="mb-0">&copy; 2023 Chicke Book. All rights reserved.</p>
       </footer>
 
+      <!-- modal dialog -->
+      <div id="modal" class="modal fade">
+        <div id="dialog" class="modal-dialog" hx-target="this">
+        </div>
+      </div>
+
         <script
         src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -117,5 +123,22 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"
         ></script>
+        <script>
+          const modal = new bootstrap.Modal(document.getElementById("modal"));
+
+          htmx.on("htmx:afterSwap", (e) => {
+            if (e.detail.target.id == "dialog"){
+              modal.show();
+            }
+          });
+
+          htmx.on("htmx:beforeSwap", (e) => {
+            if (e.detail.target.id == "dialog" && !e.detail.xhr.response) {
+              modal.hide();
+              e.detail.shouldSwap = false;
+              location.reload();
+            }
+          });
+        </script>
     </body>
 </html>
