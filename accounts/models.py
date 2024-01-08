@@ -71,9 +71,13 @@ class User(AbstractUser):
 class Skills(models.Model):
 
     name = models.CharField(max_length=200, blank=True, null=True)
-    level = models.CharField(max_length=200, blank=True, null=True)
+    level = models.PositiveSmallIntegerField(choices=(
+        (1, "★☆☆"),
+        (2, "★★☆"),
+        (3, "★★★"),
+    ), blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    
     def __str__(self) -> str:
         return self.name
     
