@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from accounts.models import User
 from cards.forms import UserInfoForm
 from django.contrib import messages
+from django.http import HttpResponse
 
 def chicken_book(request):
     cards = User.objects.all()
@@ -32,3 +33,21 @@ def user_profile(request):
         }
             
     return render(request, 'profile.html', context)
+
+@login_required
+def edit_profile_form(request):
+    user_instance = request.user
+    form = UserInfoForm(instance=user_instance)
+    
+    if request.method == "POST":
+        form = UserInfoForm(request.POST, request.FILES, instance=user_instance)
+        if form.is_valid():
+            form.save()
+            messages.error(request, 'Profile update successfully !') 
+            return HttpResponse(status=204)
+    context = {
+        'profile_form': form
+    }
+    
+    return render(request, 'edit_profile_form.html', context)
+
