@@ -147,28 +147,20 @@
             <div class="row">
             <div class="col-md-6">
                 <div class="card mb-4 mb-md-0">
-                    <div class="card-body">
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="mb-4"><span class="font-italic me-1">SKILLS</span>
-                            </p>
-                        </div>
-                        <div class="col-md-6 text-md-end">
-                            <button
-                            hx-target="#skillForm"
-                            hx-trigger="click"
-                            data-bs-toggle="modal"
-                            data-bs-target="#skillForm"
-                            class="btn btn-primary ms-1"
-                            >
-                            Add skill
-                            </button>
-                        </div>
-                    </div>
-
+                <div class="card-body">
+                    <p class="mb-4"><span class="font-italic me-1">SKILLS</span>
+                    </p>
                     <div hx-get="{% url 'skill_list' %}" hx-trigger="load">loading...
                     </div>
+                    <button
+                    hx-target="#skillForm"
+                    hx-trigger="click"
+                    data-bs-toggle="modal"
+                    data-bs-target="#skillForm"
+                    class="btn btn-primary ms-1"
+                    >
+                    Add skill
+                    </button>
                 </div>
                 </div>
             </div>
