@@ -1,13 +1,14 @@
-{% for n in skills %}
-<div class="row">
-  <div class="col-md-9">
-    <p class="mb-4">
-      <span class="text-primary font-italic me-1">{{ n.name }}</span> {{ n.level }}
-    </p>
-  </div>
-  <div class="col-md-3 text-md-end">
-    <button class="btn btn-primary btn-sm" hx-target="#dialog">Edit</button>
-  </div>
-</div>
-
-{% endfor %}
+<form method="post" action="{% url 'user_profile' %}">
+  {% csrf_token %} 
+  <table class="table">
+      {% for skill in skills %}
+      <tr>
+          <td>{{ skill.name }}</td>
+          <td class="text-center">{{ skill.get_level_display }}</td>
+          <td class="text-end">
+              <button name="delete_skill" value="{{ skill.id }}" type="btn" class="btn-close" aria-label="Close"></button>
+          </td>
+      </tr>
+      {% endfor %}
+  </table>
+</form>

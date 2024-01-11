@@ -39,7 +39,12 @@ class User(AbstractUser):
     profile_image = models.ImageField(default='default-avatar.png', upload_to='users', null=True, blank=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     work_focus = models.CharField(max_length=100, blank=True, null=True)
-    
+    # social_media
+    git_hub = models.URLField(max_length=100, blank=True, null=True)
+    linked_in = models.URLField(max_length=100, blank=True, null=True)
+    instagram = models.URLField(max_length=100, blank=True, null=True)
+    personal_web = models.URLField(max_length=100, blank=True, null=True)
+ 
     # Zmensovanie img
     def save(self, *args, **kwargs):
         
@@ -81,4 +86,8 @@ class Skills(models.Model):
     def __str__(self) -> str:
         return self.name
     
+class Project(models.Model):
     
+    project_name=models.CharField(max_length=20, blank=True, null=True)
+    project_link=models.URLField(max_length=200, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)

@@ -21,29 +21,49 @@
             <p class="text-muted mb-1">{{ card.work_focus }}</p>
             <p class="text-muted mb-4">{{ card.location }}</p>
             <h5 class="d-flex justify-content-center my-2">
+              {% if card.personal_web %}
               <a
-                href="https://github.com/Aberran"
-                target="_blank"
-                id="media-icons-gitHub"
-                class="me-2 text-white"
+              href="{{ card.personal_web }}"
+              target="_blank"
+              class="me-2 text-white"
               >
-                <i class="bi bi-github"></i>
-              </a>
+              <i class="bi bi-house-door"></i>
+            </a>
+              {% endif %}
+              {% if card.git_hub %}
+            <a
+            href="{{ card.git_hub }}"
+            target="_blank"
+            class="me-2 text-white"
+            >
+            <i class="bi bi-github"></i>
+            </a>
+            {% endif %}
+            {% if card.linked_in %}
               <a
-                href="https://www.linkedin.com/in/vladim%C3%ADr-%C5%A1ab%C3%ADk-787083267/"
-                target="_blank"
-                id="media-icons-linkedIn"
-                class="text-white"
+              href="{{ card.linked_in }}"
+              target="_blank"
+              class="me-2 text-white"
               >
-                <i class="bi bi-linkedin"></i>
-              </a>
-            </h5>
-            <div class="d-flex justify-content-center mb-2">
-              <button type="button" class="btn btn-primary">More Info</button>
-              <button type="button" class="btn btn-outline-primary ms-1">
-                Write Me !
-              </button>
-            </div>
+              <i class="bi bi-linkedin"></i>
+            </a>
+            {% endif %}
+            {% if card.instagram %}
+            <a
+            href="{{ card.instagram }}"
+            target="_blank"
+            class="text-white"
+            >
+            <i class="bi bi-instagram"></i>
+            </a>
+          {% endif %}
+        </h5>
+        <div class="d-flex justify-content-center mb-2">
+          <button type="button" class="btn btn-primary">More Info</button>
+          <button type="button" class="btn btn-outline-primary ms-1">
+            Write Me !
+          </button>
+        </div>
           </div>
         </div>
       </div>
