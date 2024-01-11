@@ -117,100 +117,107 @@
             </div>
             </div>
         </div>
-        <div class="col-lg-8">
-            <div class="card mb-4">
-            <div class="card-body">
-                <div class="row">
-                <div class="col-sm-3">
-                    <p class="mb-0">Full Name</p>
-                </div>
-                <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{ card.first_name }} {{ card.last_name }}</p>
-                </div>
-                </div>
-                <hr>
-                <div class="row">
-                <div class="col-sm-3">
-                    <p class="mb-0">Email</p>
-                </div>
-                <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{ card.email }}</p>
-                </div>
-                </div>
-                <hr>
-                <div class="row">
-                <div class="col-sm-3">
-                    <p class="mb-0">Phone</p>
-                </div>
-                <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{ card.phone_number }}</p>
-                </div>
-                </div>
-                <hr>
-                <div class="row">
-                <div class="col-sm-3">
-                    <p class="mb-0">Address</p>
-                </div>
-                <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{ card.location }}</p>
-                </div>
-                </div>
-                <hr>
-                <div class="row">
-                <div class="col-sm-3">
-                    <p class="mb-0">Bio</p>
-                </div>
-                <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{ card.about }}</p>
-                 </div>
-                </div>
-            </div>
-            </div>
-            <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-4 mb-md-0">
+            <div class="col-lg-8">
+                <div class="card mb-4">
                 <div class="card-body">
-                    <p class="mb-4"><span class="font-italic me-1">SKILLS</span>
-                    </p>
-                    <div hx-get="{% url 'skill_list' %}" hx-trigger="load">loading...
+                    <div class="row">
+                    <div class="col-sm-3">
+                        <p class="mb-0">Full Name</p>
                     </div>
-                    <button
-                    hx-target="#skillForm"
-                    hx-trigger="click"
-                    data-bs-toggle="modal"
-                    data-bs-target="#skillForm"
-                    class="btn btn-primary ms-1 btn-sm"
-                    >
-                    Add skill
-                    </button>
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{ card.first_name }} {{ card.last_name }}</p>
+                    </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                    <div class="col-sm-3">
+                        <p class="mb-0">Email</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{ card.email }}</p>
+                    </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                    <div class="col-sm-3">
+                        <p class="mb-0">Phone</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{ card.phone_number }}</p>
+                    </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                    <div class="col-sm-3">
+                        <p class="mb-0">Address</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{ card.location }}</p>
+                    </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                    <div class="col-sm-3">
+                        <p class="mb-0">Bio</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{ card.about }}</p>
+                    </div>
+                    </div>
                 </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4 mb-md-0">
+                            <div class="card-body">
+                                <p class="mb-4"><span class="font-italic me-1">SKILLS</span>
+                                </p>
+                                <div hx-get="{% url 'skill_list' %}" hx-trigger="load">loading...
+                                </div>
+                                <button
+                                hx-target="#skillForm"
+                                hx-trigger="click"
+                                data-bs-toggle="modal"
+                                data-bs-target="#skillForm"
+                                class="btn btn-primary ms-1 btn-sm"
+                                >
+                                Add skill
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card mb-4 mb-md-0">
+                            <div class="card-body">
+                                <p class="mb-4"><span class="font-italic me-1">PROJECTS</span>
+                                </p>
+                                <div hx-get="{% url 'project_list' %}" hx-trigger="load">loading...</div>
+                                <button
+                                hx-target="#projectForm"
+                                hx-trigger="click"
+                                data-bs-toggle="modal"
+                                data-bs-target="#projectForm"
+                                class="btn btn-primary ms-1 btn-sm"
+                                >
+                                Add project
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card mb-4 mb-md-0">
-                <div class="card-body">
-                    <p class="mb-4"><span class="font-italic me-1">PROJECTS</span>
-                    </p>
-                    <div hx-get="{% url 'project_list' %}" hx-trigger="load">loading...
-                    </div>
-                    <button
-                    hx-target="#projectForm"
-                    hx-trigger="click"
-                    data-bs-toggle="modal"
-                    data-bs-target="#projectForm"
-                    class="btn btn-primary ms-1 btn-sm"
-                    >
-                    Add project
-                    </button>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
         </div>
     </br>
     </section>
+
+    <table class="text-muted mb-0">
+        <tr>
+            <td>{{ card.current_project_name }}</td>
+            <td>{{ card.current_project_desc }}</td>
+            <td><a href="{{ card.current_project_link }}" target="_blank">{{ card.current_project_link }}</a></td>
+        </tr>
+    </table>
 
     {% else %}
         <p><a href="{% url 'login' %}">Login</a></p>

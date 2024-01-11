@@ -1,0 +1,151 @@
+{% extends "main.html" %}
+{% block content %}
+</br>
+    
+<section>
+    <div class="row">
+    <div class="col-lg-4">
+        <div class="card mb-4">
+        <div class="card-body text-center">
+            <img src="{{ card.profile_image.url }}"
+                            alt="avatar" class="profile-pic mx-auto mt-4" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+            <h5 class="my-3">{{ card.first_name }} {{ card.last_name }}</h5>
+            <p class="text-muted mb-1">{{ card.work_focus }}</p>
+            <p class="text-muted mb-4">{{ card.location }}</p>
+            <div class="d-flex justify-content-center mb-2">
+            <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+            </div>
+        </div>
+        </div>
+        <div class="card mb-4 mb-lg-0">
+        <div class="card-body p-0">
+            <ul class="list-group list-group-flush rounded-3">
+            {% if card.personal_web %}
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <i class="bi bi-house-door"></i>
+                <p class="mb-0"><a href="{{ card.personal_web }}">{{ card.personal_web }}</a></p>
+            </li>
+            {% endif %}
+            {% if card.git_hub %}
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <i class="bi bi-github"></i>
+                <p class="mb-0"><a href="{{ card.git_hub }}">{{ card.git_hub }}</a></p>
+            </li>
+            {% endif %}
+            {% if card.linked_in %}
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <i class="bi bi-linkedin"></i>
+                <p class="mb-0"><a href="{{ card.linked_in }}">{{ card.linked_in }}</a></p>
+            </li>
+            {% endif %}
+            {% if card.instagram %}
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <i class="bi bi-instagram"></i>
+                <p class="mb-0"><a href="{{ card.instagram }}">{{ card.instagram }}</a></p>
+            </li>
+            {% endif %}
+            </ul>
+        </div>
+        </div>
+    </div>
+        <div class="col-lg-8">
+            <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ card.first_name }} {{ card.last_name }}</p>
+                </div>
+                </div>
+                <hr>
+                <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ card.email }}</p>
+                </div>
+                </div>
+                <hr>
+                <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Phone</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ card.phone_number }}</p>
+                </div>
+                </div>
+                <hr>
+                <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Address</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ card.location }}</p>
+                </div>
+                </div>
+                <hr>
+                <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Bio</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ card.about }}</p>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4 mb-md-0">
+                        <div class="card-body">
+                            <p class="mb-4"><span class="font-italic me-1">SKILLS</span>
+                            </p>
+                            <div>
+                                <table class="table">
+                                    {% for skill in skills %}
+                                    <tr>
+                                        <td>{{ skill.name }}</td>
+                                        <td class="text-center">{{ skill.get_level_display }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card mb-4 mb-md-0">
+                        <div class="card-body">
+                            <p class="mb-4"><span class="font-italic me-1">PROJECTS</span>
+                            </p>
+                            <div>
+                                <table class="table">
+                                    {% for project in projects %}
+                                    <tr>
+                                        <td class="text-start">{{ project.project_name }}</td>
+                                        <td><p class="mb-0"><a href="{{ project.project_link }}">{{ project.project_link }}</a></p></td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</br>
+</section>
+
+<table class="text-muted mb-0">
+    <tr>
+        <td>{{ card.current_project_name }}</td>
+        <td>{{ card.current_project_desc }}</td>
+        <td><a href="{{ card.current_project_link }}" target="_blank">{{ card.current_project_link }}</a></td>
+    </tr>
+</table>
+{% endblock %}

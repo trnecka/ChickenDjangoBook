@@ -59,7 +59,7 @@
           {% endif %}
         </h5>
         <div class="d-flex justify-content-center mb-2">
-          <button type="button" class="btn btn-primary">More Info</button>
+          <a href="{% url 'user_info' card.id %}" class="btn btn-primary">More Info</a>
           <button type="button" class="btn btn-outline-primary ms-1">
             Write Me !
           </button>

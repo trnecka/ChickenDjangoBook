@@ -3,8 +3,10 @@
     height: 150px;
     object-fit: cover;
     border-radius: 50%;
-}
+};
 
 .login-form, .registration-form {
     max-width: 450px;
-}
+};
+
+.hidden { display: none; }

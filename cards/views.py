@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from accounts.models import User, Skills, Project
 from cards.forms import UserInfoForm, UserSkillForm, UserProjectForm
@@ -18,6 +18,19 @@ def project_list(request):
     projects = Project.objects.filter(user=request.user)
     context = {'projects': projects }
     return render(request, 'project_list.html', context)
+
+def user_info(request, user_id):
+    skills = Skills.objects.filter(user_id=user_id)
+    projects = Project.objects.filter(user_id=user_id)
+    card = get_object_or_404(User, pk=user_id)
+    print(skills, user_id)
+
+    context = {'card': card,
+               'skills': skills,
+               'projects': projects
+               }
+    
+    return render(request, 'user_info.html', context)
 
 @login_required
 def user_profile(request):
