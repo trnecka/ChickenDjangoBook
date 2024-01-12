@@ -22,8 +22,10 @@
       integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX"
       crossorigin="anonymous"
     ></script>
+
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
+
   </head>
   <body class="d-flex flex-column min-vh-100">
     <nav class="navbar bg-light navbar-expand-lg navbar-light bg-transparent">
@@ -71,6 +73,14 @@
               class="d-flex justify-content-center align-items-center flex-column flex-lg-row gap-3"
             >
               {% if user.is_authenticated %}
+              <a href="{% url 'message_list' %}" class="nav-link position-relative">
+                <i class="bi bi-envelope fs-4"></i>
+                {% if pending_messages_count > 0 %}
+                    <span class="badge rounded-pill bg-danger position-absolute" style="top: 60%; transform: translate(-50%, -100%);">
+                        {{ pending_messages_count }}
+                    </span>
+                {% endif %}
+            </a>
               <a href="{% url 'user_profile' %}" class="mr-4 nav-item nav-link"
                 >Logged as {{ user.first_name }} {{ user.last_name }} &nbsp;|</a
               >
@@ -118,11 +128,10 @@
 
     <div class="container flex-grow-1">{% block content %} {% endblock %}</div>
 
-    <footer class="bg-dark text-white text-center py-3">
+    <footer class="bg-dark text-white text-center py-3 bg-transparent">
       <p class="mb-0">&copy; 2023 Chicken Book. All rights reserved.</p>
     </footer>
 
-    <script src="{% static 'script.js' %}"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -133,5 +142,8 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
+
+    <script src="{% static 'script.js' %}"></script>
+    
   </body>
 </html>

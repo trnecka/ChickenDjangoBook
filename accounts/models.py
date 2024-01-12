@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.conf import settings
 from PIL import Image
 import os
 
@@ -72,7 +73,26 @@ class User(AbstractUser):
     username = None
     
     objects = UserManager()
-            
+           
+class Message(models.Model):
+    
+    STATUS = (
+        ('Pending', 'Pending'),
+        ('Read', 'Read')
+    )
+    
+    sender_name = models.CharField(max_length=100, blank=True, null=True)  # Sender's email, optional if the sender is logged in
+    sender_email = models.EmailField(blank=True, null=True)  # Sender's email, optional if the sender is logged in
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_messages')  # Recipient of the message
+    subject = models.CharField(max_length=20)
+    content = models.TextField(max_length=1000)  # Message content
+    sent_at = models.DateTimeField(auto_now_add=True)  # Timestamp when the message is sent
+    status = models.CharField(max_length=10, choices=STATUS, default='Pending')
+
+    @classmethod
+    def count_pending_messages(cls):
+        return cls.objects.filter(status='Pending').count()        
+ 
 class Skills(models.Model):
 
     name = models.CharField(max_length=200, blank=True, null=True)

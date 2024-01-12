@@ -1,5 +1,7 @@
 {% extends "main.html" %} {% block content %}
+
 <section>
+
   <div class="container">
     <div class="row">
       {% for card in cards %} {% if card.is_visible %}
@@ -60,9 +62,7 @@
         </h5>
         <div class="d-flex justify-content-center mb-2">
           <a href="{% url 'user_info' card.id %}" class="btn btn-primary">More Info</a>
-          <button type="button" class="btn btn-outline-primary ms-1">
-            Write Me !
-          </button>
+          <a href="{% url 'send_message' card.id %}" class="btn btn-outline-primary ms-1">Write Me !</a>
         </div>
           </div>
         </div>

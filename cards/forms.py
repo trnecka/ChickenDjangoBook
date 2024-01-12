@@ -1,5 +1,5 @@
 from django import forms
-from accounts.models import User, Skills, Project
+from accounts.models import User, Skills, Project, Message
 
 
 class UserInfoForm(forms.ModelForm):
@@ -18,3 +18,9 @@ class UserProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['project_name', 'project_link']
+        
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['sender_name', 'sender_email', 'subject', 'content']
+        
