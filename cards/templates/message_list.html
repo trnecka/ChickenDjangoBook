@@ -3,6 +3,7 @@
 
 <form method="post" action="">
     {% csrf_token %} 
+</br>
     <table class="table">
         <thead>
             <tr>
@@ -16,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for msg in messages %}
+            {% for msg in private_messages %}
             <tr>
                 <td>{{ msg.sender_name }}</td>
                 <td>{{ msg.sender_email }}</td>

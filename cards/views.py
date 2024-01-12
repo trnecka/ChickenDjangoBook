@@ -4,13 +4,13 @@ from accounts.models import User, Skills, Project, Message
 from cards.forms import UserInfoForm, UserSkillForm, UserProjectForm, MessageForm
 from django.contrib import messages
 
-def dashboard_view(request):
+# def dashboard_view(request):
 
-    context = {
-        'pending_messages_count': Message.count_pending_messages() if request.user.is_authenticated else 0,
-    }
+#     context = {
+#         'pending_messages_count': Message.count_pending_messages() if request.user.is_authenticated else 0,
+#     }
     
-    return render(request, 'main.html', context)
+#     return render(request, 'main.html', context)
 
 def chicken_book(request):
     cards = User.objects.all()
@@ -68,7 +68,7 @@ def send_message(request, recipient):
 
 def message_list(request):
     messages = Message.objects.filter(recipient=request.user)
-    context = {'messages': messages }
+    context = {'private_messages': messages }
     return render(request, 'message_list.html', context)
 
 def message_detail(request, message_id):
