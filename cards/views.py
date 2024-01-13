@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from accounts.models import User, Skills, Project
 from cards.forms import UserInfoForm, UserSkillForm, UserProjectForm
 from django.contrib import messages
+from django.http import HttpResponse
 
 #main_page(chickenbook)
 def chicken_book(request):
@@ -33,15 +34,8 @@ def user_profile(request):
     project_form= UserProjectForm()
     
     if request.method == 'POST':
-        if 'infoform' in request.POST:
-            info_form = UserInfoForm(request.POST, request.FILES, instance=user_instance)
-            if info_form.is_valid():
-                info_form.save()
-                messages.success(request, 'Profile update successfully !')  
-                return redirect('user_profile')
-            else:
-                print(info_form.errors)  
-        elif 'skillform' in request.POST:
+
+        if 'skillform' in request.POST:
             skill_form = UserSkillForm(request.POST)
             if skill_form.is_valid():
                 skill_form.instance.user = user_instance
@@ -82,6 +76,7 @@ def user_profile(request):
             
     return render(request, 'profile.html', context)
 
+
 def skill_list(request):
     skills = Skills.objects.filter(user=request.user)
     context = {'skills': skills }
@@ -92,5 +87,23 @@ def project_list(request):
     context = {'projects': projects }
     return render(request, 'project_list.html', context)
 
+
+
+@login_required
+def edit_profile_form(request):
+    user_instance = request.user
+    form = UserInfoForm(instance=user_instance)
+    
+    if request.method == "POST":
+        form = UserInfoForm(request.POST, request.FILES, instance=user_instance)
+        if form.is_valid():
+            form.save()
+            messages.error(request, 'Profile update successfully !') 
+            return HttpResponse(status=204)
+    context = {
+        'profile_form': form
+    }
+    
+    return render(request, 'edit_profile_form.html', context)
 
 

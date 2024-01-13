@@ -3,27 +3,9 @@
 
 {% block content %}
     {% if user.is_authenticated %}
+
     </br>
-    
-    <div class="modal fade" id="profileForm" tabindex="-1" role="dialog" aria-labelledby="profileFormTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="profileFormLabel">Edit User Profile</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="{% url 'user_profile' %}" enctype="multipart/form-data">
-                        {% csrf_token %}    
-                        {{ infoform|crispy }}
-                        <button type="submit" name="infoform" class="btn btn-primary">Save profile</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <div class="modal fade" id="skillForm" tabindex="-1" role="dialog" aria-labelledby="skillFormTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -63,6 +45,7 @@
         </div>
     </div>
 
+
     <section>
         <div class="row">
         <div class="col-lg-4">
@@ -75,12 +58,13 @@
                 <p class="text-muted mb-4">{{ card.location }}</p>
                 <div class="d-flex justify-content-center mb-2">
                 <button 
-                    hx-target="#profileForm"
+                    hx-get="{% url 'edit_profile_form' %}"
+                    hx-target="#dialog"
                     hx-trigger="click"
-                    data-bs-toggle="modal"
-                    data-bs-target="#profileForm"
-                    class="btn btn-primary ms-1"
-                    >Edit profile</button>
+                    class="btn btn-primary ms-1">
+                    Edit profile
+                </button>
+
                 <button type="button" class="btn btn-outline-primary ms-1">Message</button>
                 </div>
             </div>
