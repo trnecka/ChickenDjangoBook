@@ -1,0 +1,14 @@
+<form method="post" action="{% url 'user_profile' %}">
+  {% csrf_token %} 
+  <table class="table">
+      {% for skill in skills %}
+      <tr>
+          <td>{{ skill.name }}</td>
+          <td class="text-center">{{ skill.get_level_display }}</td>
+          <td class="text-end">
+              <button name="delete_skill" value="{{ skill.id }}" type="btn" class="btn-close" aria-label="Close"></button>
+          </td>
+      </tr>
+      {% endfor %}
+  </table>
+</form>

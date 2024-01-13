@@ -1,0 +1,16 @@
+<form method="post" action="{% url 'user_profile' %}">
+    {% csrf_token %} 
+    <table class="table">
+        {% for project in projects %}
+        <tr>
+            <td class="text-start">{{ project.project_name }}</td>
+            <td><p class="mb-0"><a href="{{ project.project_link }}">{{ project.project_link }}</a></p></td>
+            <td class="text-end">
+                <button name="delete_project" value="{{ project.id }}" type="btn" class="btn-close" aria-label="Close"></button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+  </form>
+
+  

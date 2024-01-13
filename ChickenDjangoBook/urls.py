@@ -26,6 +26,7 @@ urlpatterns = [
     path('account/login/', CustomLoginView.as_view(), name='login'),
     path('account/', include('django.contrib.auth.urls')),
     path('', include('cards.urls')),
+    path('', include('chickenmessages.urls')),
 ]
 
 from django.conf import settings

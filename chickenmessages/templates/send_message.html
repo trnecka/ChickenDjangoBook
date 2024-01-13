@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<form method="post" action="">
+    {% csrf_token %}  
+</br>  
+    <h2>Writing to {{ card.first_name }} {{ card.last_name }}</h2>
+</br>  
+
+    {{ messageform|crispy }}
+    <button type="submit" name="messageform" class="btn btn-primary">Send Message</button>
+    <button type="button" class="btn btn-secondary">Back</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "main.html" %}  <!-- Replace with your base template -->
+
+{% block content %}
+    <h1>Message Detail</h1>
+    <p><strong>From:</strong> {{ message.sender_name }} ({{ message.sender_email }})</p>
+    <p><strong>Subject:</strong> {{ message.subject }}</p>
+    <p><strong>Content:</strong> {{ message.content }}</p>
+    <p><strong>Sent At:</strong> {{ message.sent_at }}</p>
+    <p><strong>Status:</strong> {{ message.get_status_display }}</p>
+    <a href="{% url 'message_list' %}" class="btn btn-secondary">Back to Messages</a>
+{% endblock %}

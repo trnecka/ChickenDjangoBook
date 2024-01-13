@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from chickenmessages.models import Message
 from PIL import Image
 import os
 
@@ -28,7 +29,6 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=100)
@@ -40,19 +40,24 @@ class User(AbstractUser):
     profile_image = models.ImageField(default='default-avatar.png', upload_to='users', null=True, blank=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     work_focus = models.CharField(max_length=100, blank=True, null=True)
-    
-    
+    # social_media
+    git_hub = models.URLField(max_length=100, blank=True, null=True)
+    linked_in = models.URLField(max_length=100, blank=True, null=True)
+    instagram = models.URLField(max_length=100, blank=True, null=True)
+    personal_web = models.URLField(max_length=100, blank=True, null=True)
+ 
     # Zmensovanie img
     def save(self, *args, **kwargs):
         
-        try:
-            old_image = User.objects.get(pk=self.pk).profile_image
-            if old_image.name != 'default-avatar.png':
-                old_image_path = os.path.join('media', old_image.name)
-                if os.path.isfile(old_image_path):
-                    os.remove(old_image_path)
-        except User.DoesNotExist:
-            pass
+        # mazanie stareho img
+        # try:
+        #     old_image = User.objects.get(pk=self.pk).profile_image
+        #     if old_image.name != 'default-avatar.png':
+        #         old_image_path = os.path.join('media', old_image.name)
+        #         if os.path.isfile(old_image_path):
+        #             os.remove(old_image_path)
+        # except User.DoesNotExist:
+        #     pass
         
         super().save(*args, **kwargs)
         
@@ -61,10 +66,29 @@ class User(AbstractUser):
             output_size = (150, 150)
             img.thumbnail(output_size)
             img.save(self.profile_image.path)
-    
+            
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
     
     username = None
     
-    objects = UserManager()
+    objects = UserManager()        
+ 
+class Skills(models.Model):
+
+    name = models.CharField(max_length=200, blank=True, null=True)
+    level = models.PositiveSmallIntegerField(choices=(
+        (1, "★☆☆"),
+        (2, "★★☆"),
+        (3, "★★★"),
+    ), blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    def __str__(self) -> str:
+        return self.name
+    
+class Project(models.Model):
+    
+    project_name=models.CharField(max_length=20, blank=True, null=True)
+    project_link=models.URLField(max_length=200, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
