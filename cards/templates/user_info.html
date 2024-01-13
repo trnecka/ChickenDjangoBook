@@ -13,7 +13,7 @@
             <p class="text-muted mb-1">{{ card.work_focus }}</p>
             <p class="text-muted mb-4">{{ card.location }}</p>
             <div class="d-flex justify-content-center mb-2">
-            <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                <a href="{% url 'send_message' card.id %}" class="btn btn-outline-primary ms-1">Write Me !</a>
             </div>
         </div>
         </div>
