@@ -1,31 +1,14 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from accounts.models import User, Skills, Project, Message
-from cards.forms import UserInfoForm, UserSkillForm, UserProjectForm, MessageForm
+from accounts.models import User, Skills, Project
+from cards.forms import UserInfoForm, UserSkillForm, UserProjectForm
 from django.contrib import messages
 
-# def dashboard_view(request):
-
-#     context = {
-#         'pending_messages_count': Message.count_pending_messages() if request.user.is_authenticated else 0,
-#     }
-    
-#     return render(request, 'main.html', context)
-
+#main_page(chickenbook)
 def chicken_book(request):
     cards = User.objects.all()
     context = {'cards': cards }
     return render(request, 'chickenbook.html', context)
-
-def skill_list(request):
-    skills = Skills.objects.filter(user=request.user)
-    context = {'skills': skills }
-    return render(request, 'skill_list.html', context)
-
-def project_list(request):
-    projects = Project.objects.filter(user=request.user)
-    context = {'projects': projects }
-    return render(request, 'project_list.html', context)
 
 def user_info(request, user_id):
     skills = Skills.objects.filter(user_id=user_id)
@@ -39,48 +22,7 @@ def user_info(request, user_id):
     
     return render(request, 'user_info.html', context)
 
-def send_message(request, recipient):
-    card = get_object_or_404(User, pk=recipient)
-
-    # Initialize the form with sender's name and email if the user is logged in
-    if request.user.is_authenticated:
-        initial_data = {
-            'sender_name': request.user.get_full_name(),  # Or just request.user.first_name
-            'sender_email': request.user.email
-        }
-        message_form = MessageForm(initial=initial_data)
-    else:
-        message_form = MessageForm()
-
-    if request.method == 'POST':
-        message_form = MessageForm(request.POST)
-        if message_form.is_valid():
-            message = message_form.save(commit=False)
-            message.recipient = card
-            message.save()
-            messages.success(request, 'Message sent successfully!')
-            return redirect('chicken-book')  # Replace 'some_view' with the desired redirect view name
-        else:
-            messages.error(request, 'There was an error in your form.')
-
-    context = {'messageform': message_form, 'card': card}
-    return render(request, 'send_message.html', context)
-
-def message_list(request):
-    messages = Message.objects.filter(recipient=request.user)
-    context = {'private_messages': messages }
-    return render(request, 'message_list.html', context)
-
-def message_detail(request, message_id):
-    message = get_object_or_404(Message, id=message_id)
-
-    # Update the message status to 'Read' if it is 'Pending'
-    if message.status == 'Pending':
-        message.status = 'Read'
-        message.save()
-
-    return render(request, 'message_detail.html', {'message': message})
-
+# user_profile
 @login_required
 def user_profile(request):
     user_instance = request.user
@@ -139,6 +81,16 @@ def user_profile(request):
     }
             
     return render(request, 'profile.html', context)
+
+def skill_list(request):
+    skills = Skills.objects.filter(user=request.user)
+    context = {'skills': skills }
+    return render(request, 'skill_list.html', context)
+
+def project_list(request):
+    projects = Project.objects.filter(user=request.user)
+    context = {'projects': projects }
+    return render(request, 'project_list.html', context)
 
 
 

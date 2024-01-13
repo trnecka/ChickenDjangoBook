@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     
     'cards',
     'accounts',
+    'chickenmessages',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
