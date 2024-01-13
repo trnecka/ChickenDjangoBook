@@ -8,8 +8,8 @@ class Message(models.Model):
         ('Read', 'Read')
     )
     
-    sender_name = models.CharField(max_length=100, blank=True, null=True)  # Sender's email, optional if the sender is logged in
-    sender_email = models.EmailField(blank=True, null=True)  # Sender's email, optional if the sender is logged in
+    sender_name = models.CharField(max_length=100, default='')  # Sender's email, optional if the sender is logged in
+    sender_email = models.EmailField(default='')  # Sender's email, optional if the sender is logged in
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_messages')  # Recipient of the message
     subject = models.CharField(max_length=20)
     content = models.TextField(max_length=1000)  # Message content
