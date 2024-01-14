@@ -29,6 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == 'True'
 
+ALLOWED_HOSTS = ["chickenbook.pythonanywhere.com", "127.0.0.1"]
 
 # Application definition
 
@@ -67,7 +68,7 @@ ROOT_URLCONF = 'ChickenDjangoBook.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'templates/'],
+        'DIRS': [ '/home/chickenbook/ChickenDjangoBook/templates', BASE_DIR / 'templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,7 +133,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [ 
+STATICFILES_DIRS = [
+                    '/home/chickenbook/ChickenDjangoBook/static',
                     BASE_DIR / 'static',
                     ]
 
