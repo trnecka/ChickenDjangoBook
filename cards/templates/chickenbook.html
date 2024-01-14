@@ -5,15 +5,15 @@
   <div class="container">
     <div class="row">
       {% for card in cards %} {% if card.is_visible %}
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card mx-auto" style="max-width: 400px">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
+        <div class="card mx-auto" style="">
           <img
             src="{{ card.profile_image.url }}"
             alt="avatar"
             class="profile-pic mx-auto mt-4"
             style="
-              width: 150px;
-              height: 150px;
+              width: 85px;
+              height: 85px;
               object-fit: cover;
               border-radius: 50%;
             "
@@ -61,8 +61,8 @@
           {% endif %}
         </h5>
         <div class="d-flex justify-content-center mb-2">
-          <a href="{% url 'user_info' card.id %}" class="btn btn-primary">More Info</a>
-          <a href="{% url 'send_message' card.id %}" class="btn btn-outline-primary ms-1">Write Me !</a>
+          <a href="{% url 'user_info' card.id %}" class="btn btn-primary btn-sm">More Info</a>
+          <a href="{% url 'send_message' card.id %}" class="btn btn-outline-primary btn-sm ms-1">Write Me !</a>
         </div>
           </div>
         </div>
