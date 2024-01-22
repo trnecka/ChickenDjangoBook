@@ -5,9 +5,7 @@ from cards.forms import UserInfoForm, UserSkillForm, UserProjectForm
 from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 # API
-from django.core.serializers import serialize
 from accounts.models import User
-import pandas as pd
 import json
 
 #main_page(chickenbook)
@@ -137,18 +135,19 @@ def users_api_download(request):
     users = User.objects.filter(is_visible=True)
     data = serialize_users(users)
 
-    if format_type == 'excel':
-        # Convert data to a DataFrame and then to an Excel file
-        df = pd.DataFrame(data)
-        response = HttpResponse(content_type='application/vnd.ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="users.xlsx"'
-        df.to_excel(response, index=False)
-        return response
-    elif format_type == 'json':
+    # if format_type == 'excel':
+    #     # Convert data to a DataFrame and then to an Excel file
+    #     df = pd.DataFrame(data)
+    #     response = HttpResponse(content_type='application/vnd.ms-excel')
+    #     response['Content-Disposition'] = 'attachment; filename="users.xlsx"'
+    #     df.to_excel(response, index=False)
+    #     return response
+    if format_type == 'json':
         response = HttpResponse(json.dumps({'users': data}), content_type="application/json")
         response['Content-Disposition'] = 'attachment; filename="chickens.json"'
         return response
-    
+    elif format_type == 'csv':
+        return HttpResponse("<h1>CSV download in progress :)</h1>")
     else:
      
         return JsonResponse({'users': data})
