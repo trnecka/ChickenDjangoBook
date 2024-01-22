@@ -80,7 +80,7 @@
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <li><a class="dropdown-item" href="{% url 'users_api_view' %}">Http Response</a></li>
                   <li><a class="dropdown-item" href="/api/users/download/?format=json">Download JSON</a></li>
-                  <li><a class="dropdown-item" href="/api/users/download/?format=excel">Download Excel</a></li>
+                  <li><a class="dropdown-item" href="/api/users/download/?format=csv">Download CSV</a></li>
               </ul>
               </div>
               {% if user.is_authenticated %}
