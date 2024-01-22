@@ -73,6 +73,9 @@
             <div
               class="d-flex justify-content-center align-items-center flex-column flex-lg-row gap-3"
             >
+            <a href="{% url 'users_api' %}" class="nav-link position-relative">
+              API
+            </a>
               {% if user.is_authenticated %}
               <a href="{% url 'message_list' %}" class="nav-link position-relative">
                 <i class="bi bi-envelope fs-4"></i>
@@ -81,7 +84,7 @@
                         {{ pending_messages_count }}
                     </span>
                 {% endif %}
-            </a>
+              </a>
               <a href="{% url 'user_profile' %}" class="mr-4 nav-item nav-link"
                 >Logged as {{ user.first_name }} {{ user.last_name }} &nbsp;|</a
               >

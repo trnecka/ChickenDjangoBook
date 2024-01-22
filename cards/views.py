@@ -4,6 +4,10 @@ from accounts.models import User, Skills, Project
 from cards.forms import UserInfoForm, UserSkillForm, UserProjectForm
 from django.contrib import messages
 from django.http import HttpResponse
+# API
+from django.core.serializers import serialize
+from accounts.models import User
+from django.http import JsonResponse
 
 #main_page(chickenbook)
 def chicken_book(request):
@@ -107,3 +111,23 @@ def edit_profile_form(request):
     return render(request, 'edit_profile_form.html', context)
 
 
+# API ....mozno spravit vlastnu appku
+
+def serialize_users(queryset):
+    users_list = []
+    for user in queryset:
+        user_data = {
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            # Add other fields you want to include
+        }
+        users_list.append(user_data)
+    return users_list
+
+def users_api(request):
+    
+    users = User.objects.filter(is_visible=True)
+    data = serialize_users(users)
+    print(data)
+    return JsonResponse({'users': data})

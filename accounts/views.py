@@ -24,3 +24,4 @@ class CustomLoginView(LoginView):
         messages.success(self.request, 'Login successful!')
         return response
     
+    
