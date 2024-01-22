@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 # API
 from accounts.models import User
-import json
+import json, csv
 
 #main_page(chickenbook)
 def chicken_book(request):
@@ -135,19 +135,27 @@ def users_api_download(request):
     users = User.objects.filter(is_visible=True)
     data = serialize_users(users)
 
-    # if format_type == 'excel':
-    #     # Convert data to a DataFrame and then to an Excel file
-    #     df = pd.DataFrame(data)
-    #     response = HttpResponse(content_type='application/vnd.ms-excel')
-    #     response['Content-Disposition'] = 'attachment; filename="users.xlsx"'
-    #     df.to_excel(response, index=False)
-    #     return response
     if format_type == 'json':
         response = HttpResponse(json.dumps({'users': data}), content_type="application/json")
         response['Content-Disposition'] = 'attachment; filename="chickens.json"'
         return response
     elif format_type == 'csv':
-        return HttpResponse("<h1>CSV download in progress :)</h1>")
+        # Create an HTTP response with the correct content-type
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="chickens.csv"'
+
+        # Create a csv writer and write the header and data
+        writer = csv.writer(response)
+        
+        if data:
+            # Writing the header (keys of the dictionary)
+            writer.writerow(data[0].keys())
+
+            # Writing the data rows
+            for user in data:
+                writer.writerow(user.values())
+
+        return response
     else:
      
         return JsonResponse({'users': data})
