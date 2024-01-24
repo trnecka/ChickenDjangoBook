@@ -12,6 +12,7 @@ python-dotenv = "^1.0.0"
 django-crispy-forms = "^2.1"
 crispy-bootstrap5 = "^2023.10"
 pillow = "^10.1.0"
+aiosmtpd = "^1.4.4.post2"
 
 [tool.poetry.group.dev.dependencies]
 pytest-django = "^4.7.0"

@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == 'True'
 
-ALLOWED_HOSTS = ["chickenbook.pythonanywhere.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["chickenbook.pythonanywhere.com", "127.0.0.1", 'testserver']
 
 # Application definition
 
@@ -68,7 +68,12 @@ ROOT_URLCONF = 'ChickenDjangoBook.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ '/home/chickenbook/ChickenDjangoBook/templates', BASE_DIR / 'templates/'],
+        'DIRS': [ 
+            '/home/chickenbook/ChickenDjangoBook/templates', 
+            BASE_DIR / 'templates/',
+            '/home/chickenbook/ChickenDjangoBook',
+            BASE_DIR
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -149,3 +154,17 @@ LOGOUT_REDIRECT_URL = 'login'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# host email
+EMAIL_HOST_USER=os.environ.get('EMAIL_HOST_USER')
+
+if DEBUG == True:
+    # Settings the email server for development
+    EMAIL_BACKEND=os.environ.get('EMAIL_BACKEND_DEVELOPMENT')
+else:
+    # Settings the email server for production
+    EMAIL_BACKEND=os.environ.get('EMAIL_BACKEND_PRODUCTION')
+    EMAIL_PORT=int(os.environ.get('EMAIL_PORT'))
+    EMAIL_USE_TLS=os.environ.get('EMAIL_USE_TLS').upper() == 'TRUE'
+    EMAIL_HOST=os.environ.get('EMAIL_HOST')
+    EMAIL_HOST_PASSWORD=os.environ.get('EMAIL_HOST_PASSWORD')

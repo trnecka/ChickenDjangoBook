@@ -1,0 +1,7 @@
+Hello {{ first_name }} {{ last_name }},
+
+Thanks for registering! We are glad to have you with us. We wish you a great experience using our platform.
+
+Best regards,
+ChickenBook
+
