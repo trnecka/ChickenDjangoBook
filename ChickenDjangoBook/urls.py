@@ -27,6 +27,7 @@ urlpatterns = [
     path('account/', include('django.contrib.auth.urls')),
     path('', include('cards.urls')),
     path('', include('chickenmessages.urls')),
+    path('activate/<uidb64>/<token>', accounts.views.VerificationPageView.as_view(), name='activate'),
 ]
 
 from django.conf import settings

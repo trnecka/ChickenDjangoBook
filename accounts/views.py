@@ -1,5 +1,6 @@
 from django.contrib import messages
-from django.views.generic import CreateView
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.views.generic import CreateView, View
 from django.urls import reverse_lazy
 from accounts.forms import RegistrationForm, CustomAuthenticationForm
 from django.contrib.auth.views import LoginView
@@ -7,6 +8,24 @@ from django.contrib.auth.views import LoginView
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import get_template
+
+### toto je pro aktivacni link v emailu
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_str
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
+from .models import User
+from django.shortcuts import redirect
+### toto bude v utils.py ###
+
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
+class AppTokenGenerator(PasswordResetTokenGenerator):
+    def _make_hash_value(self, user: AbstractBaseUser, timestamp: int) -> str:
+        return (f"{user.is_active}{user.pk}{timestamp}")
+
+account_activation_token = AppTokenGenerator()
+####
 
 class RegistrationFormView(CreateView):
     template_name = 'registration.html'
@@ -33,20 +52,37 @@ class RegistrationFormView(CreateView):
         Returns:
             int: Number of the send email
         """
+        ### vytvareni aktivacniho tokenu
+        uidb64 = urlsafe_base64_encode(force_bytes(to_email))
+        domain = get_current_site(self.request)
+        
+        user = User(
+            email=to_email,
+            last_name=last_name,
+            first_name=first_name,
+        )
+        
+        print(type(user))
+        
+        link = reverse("activate", kwargs={"uidb64": uidb64, "token": account_activation_token.make_token(user)})
+        activate_url = f"http://{domain}{link}"
+        
         email_message = EmailMultiAlternatives(
             subject="Chicken Book Registration",
             body=get_template('accounts/templates/email/registration_email.txt').render(
                 {
                     'first_name': first_name,
                     'last_name': last_name,
+                    'activate_url': activate_url,
                     }),
-            from_email=settings.EMAIL_HOST_USER,
+            # from_email=settings.EMAIL_HOST_USER,
             to=[to_email]
             )
         email_message.attach_alternative(get_template('accounts/templates/email/registration_email.html').render(
             {
                     'first_name': first_name,
                     'last_name': last_name,
+                    'activate_url': activate_url,
                 }), "text/html")
         return email_message.send()        
     
@@ -60,3 +96,18 @@ class CustomLoginView(LoginView):
         messages.success(self.request, 'Login successful!')
         return response
     
+class VerificationPageView(View):
+    def get(self, request, uidb64, token):
+        try:
+            email = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(email=email)
+            if user.is_active == True:
+                messages.warning(request, "Account was already activated")
+                return redirect('login')
+            else:
+                user.is_active = True
+                user.save()
+                messages.success(request, "Account was activated succefully")
+        except Exception as ex:
+            pass
+        return redirect('login')
