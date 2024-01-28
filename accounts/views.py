@@ -1,32 +1,20 @@
 from django.contrib import messages
-from django.contrib.auth.base_user import AbstractBaseUser
 from django.views.generic import CreateView, View
 from django.urls import reverse_lazy
 from accounts.forms import RegistrationForm, CustomAuthenticationForm
 from django.contrib.auth.views import LoginView
-
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import get_template
 
-### toto je pro aktivacni link v emailu
+### These imports are for creating activation link
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from .models import User
 from django.shortcuts import redirect
-from django.contrib.auth import login as auth_login
-### toto bude v utils.py ###
-
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-
-class AppTokenGenerator(PasswordResetTokenGenerator):
-    def _make_hash_value(self, user: AbstractBaseUser, timestamp: int) -> str:
-        return (f"{user.is_active}{user.pk}{timestamp}")
-
-account_activation_token = AppTokenGenerator()
-####
+from .utils import account_activation_token
 
 class RegistrationFormView(CreateView):
     template_name = 'registration.html'
@@ -35,7 +23,6 @@ class RegistrationFormView(CreateView):
     
     def form_valid(self, form):
         response = super().form_valid(form)
-        # nastavení hodnoty is_active = False
         user = form.save(commit=False)
         user.is_active = False
         user.save()
@@ -58,7 +45,6 @@ class RegistrationFormView(CreateView):
         Returns:
             int: Number of the send email
         """
-        ### vytvareni aktivacniho tokenu
         uidb64 = urlsafe_base64_encode(force_bytes(to_email))
         domain = get_current_site(self.request)
         
@@ -79,7 +65,6 @@ class RegistrationFormView(CreateView):
                     'last_name': last_name,
                     'activate_url': activate_url,
                     }),
-            # from_email=settings.EMAIL_HOST_USER,
             to=[to_email]
             )
         email_message.attach_alternative(get_template('accounts/templates/email/registration_email.html').render(
@@ -92,7 +77,7 @@ class RegistrationFormView(CreateView):
     
 class CustomLoginView(LoginView):
     template_name = 'login.html'
-    # form_class = CustomAuthenticationForm
+    form_class = CustomAuthenticationForm
     authentication_form = CustomAuthenticationForm
     success_url = reverse_lazy('user_profile')
     
