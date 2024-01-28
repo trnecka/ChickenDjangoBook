@@ -16,6 +16,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from .models import User
 from django.shortcuts import redirect
+from django.contrib.auth import login as auth_login
 ### toto bude v utils.py ###
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -34,7 +35,12 @@ class RegistrationFormView(CreateView):
     
     def form_valid(self, form):
         response = super().form_valid(form)
-        messages.success(self.request, 'Account created successfully! Now you can log in :)')
+        # nastavení hodnoty is_active = False
+        user = form.save(commit=False)
+        user.is_active = False
+        user.save()
+        
+        messages.success(self.request, 'Account created successfully! Open your email and click on the activation link for to activate your user profile.')
         self.send_registration_email(form.cleaned_data['first_name'],
                                     form.cleaned_data['last_name'],
                                     form.cleaned_data['email'])
@@ -62,8 +68,6 @@ class RegistrationFormView(CreateView):
             first_name=first_name,
         )
         
-        print(type(user))
-        
         link = reverse("activate", kwargs={"uidb64": uidb64, "token": account_activation_token.make_token(user)})
         activate_url = f"http://{domain}{link}"
         
@@ -88,7 +92,8 @@ class RegistrationFormView(CreateView):
     
 class CustomLoginView(LoginView):
     template_name = 'login.html'
-    form_class = CustomAuthenticationForm
+    # form_class = CustomAuthenticationForm
+    authentication_form = CustomAuthenticationForm
     success_url = reverse_lazy('user_profile')
     
     def form_valid(self, form):
@@ -96,18 +101,19 @@ class CustomLoginView(LoginView):
         messages.success(self.request, 'Login successful!')
         return response
     
+
 class VerificationPageView(View):
     def get(self, request, uidb64, token):
         try:
             email = force_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(email=email)
             if user.is_active == True:
-                messages.warning(request, "Account was already activated")
+                messages.warning(request, "Account was already activated. You can log in you profile.")
                 return redirect('login')
             else:
                 user.is_active = True
                 user.save()
-                messages.success(request, "Account was activated succefully")
+                messages.success(request, "Account was activated succefully.  You can log in you profile.")
         except Exception as ex:
             pass
         return redirect('login')
