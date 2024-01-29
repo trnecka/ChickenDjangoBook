@@ -12,5 +12,6 @@ urlpatterns = [
     path('api/users/', views.users_api_view, name='users_api_view'),
     path('api/users/download/', views.users_api_download, name='users_api_download'),
     path('edit-profile-form', views.edit_profile_form, name='edit_profile_form'),
+    path('about-project', views.about_project, name='about_project')
 
 ]
