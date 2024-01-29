@@ -1,0 +1,9 @@
+Hello {{ first_name }} {{ last_name }},
+
+Thanks for registering! We are glad to have you with us. We wish you a great experience using our platform.
+
+Here is your activation link: {{ activate_url }}
+
+Best regards,
+ChickenBook
+
