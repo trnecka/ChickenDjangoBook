@@ -47,6 +47,7 @@ class RegistrationFormView(CreateView):
         """
         uidb64 = urlsafe_base64_encode(force_bytes(to_email))
         domain = get_current_site(self.request)
+        scheme = self.request.scheme 
         
         user = User(
             email=to_email,
@@ -55,7 +56,7 @@ class RegistrationFormView(CreateView):
         )
         
         link = reverse("activate", kwargs={"uidb64": uidb64, "token": account_activation_token.make_token(user)})
-        activate_url = f"http://{domain}{link}"
+        activate_url = f"{scheme}://{domain}{link}"
         
         email_message = EmailMultiAlternatives(
             subject="Chicken Book Registration",
