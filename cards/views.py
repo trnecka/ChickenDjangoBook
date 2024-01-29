@@ -14,6 +14,9 @@ def chicken_book(request):
     context = {'cards': cards }
     return render(request, 'chickenbook.html', context)
 
+def about_project(request):
+        return render(request, 'about_project.html')
+
 def user_info(request, user_id):
     skills = Skills.objects.filter(user_id=user_id)
     projects = Project.objects.filter(user_id=user_id)
