@@ -74,25 +74,25 @@
                 {% if card.personal_web %}
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                     <i class="bi bi-house-door"></i>
-                    <p class="mb-0"><a href="{{ card.personal_web }}">{{ card.personal_web }}</a></p>
+                    <p class="mb-0"><a href="{{ card.personal_web }}">{{ card.personal_web|truncatechars:30 }}</a></p>
                 </li>
                 {% endif %}
                 {% if card.git_hub %}
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                     <i class="bi bi-github"></i>
-                    <p class="mb-0"><a href="{{ card.git_hub }}">{{ card.git_hub }}</a></p>
+                    <p class="mb-0"><a href="{{ card.git_hub }}">{{ card.git_hub|truncatechars:30 }}</a></p>
                 </li>
                 {% endif %}
                 {% if card.linked_in %}
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                     <i class="bi bi-linkedin"></i>
-                    <p class="mb-0"><a href="{{ card.linked_in }}">{{ card.linked_in }}</a></p>
+                    <p class="mb-0"><a href="{{ card.linked_in }}">{{ card.linked_in|truncatechars:30 }}</a></p>
                 </li>
                 {% endif %}
                 {% if card.instagram %}
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                     <i class="bi bi-instagram"></i>
-                    <p class="mb-0"><a href="{{ card.instagram }}">{{ card.instagram }}</a></p>
+                    <p class="mb-0"><a href="{{ card.instagram }}">{{ card.instagram|truncatechars:30 }}</a></p>
                 </li>
                 {% endif %}
                 </ul>
