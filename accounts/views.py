@@ -85,7 +85,6 @@ class CustomLoginView(LoginView):
         response = super().form_valid(form)
         messages.success(self.request, 'Login successful!')
         return response
-    
 
 class VerificationPageView(View):
     def get(self, request, uidb64, token):
@@ -102,3 +101,4 @@ class VerificationPageView(View):
         except Exception as ex:
             pass
         return redirect('login')
+

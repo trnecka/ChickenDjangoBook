@@ -3,7 +3,10 @@ from django.contrib.auth.decorators import login_required
 from accounts.models import User, Skills, Project
 from cards.forms import UserInfoForm, UserSkillForm, UserProjectForm
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+# API
+from accounts.models import User
+import json, csv
 
 #main_page(chickenbook)
 def chicken_book(request):
@@ -107,3 +110,52 @@ def edit_profile_form(request):
     return render(request, 'edit_profile_form.html', context)
 
 
+# API ....mozno spravit vlastnu appku
+
+def serialize_users(queryset):
+    users_list = []
+    for user in queryset:
+        user_data = {
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            # Add other fields you want to include
+        }
+        users_list.append(user_data)
+    return users_list
+
+def users_api_view(request):
+    
+    users = User.objects.filter(is_visible=True)
+    data = serialize_users(users)
+    return JsonResponse({'users': data})
+
+def users_api_download(request):
+    format_type = request.GET.get('format', 'json')  # Default format is JSON
+    users = User.objects.filter(is_visible=True)
+    data = serialize_users(users)
+
+    if format_type == 'json':
+        response = HttpResponse(json.dumps({'users': data}), content_type="application/json")
+        response['Content-Disposition'] = 'attachment; filename="chickens.json"'
+        return response
+    elif format_type == 'csv':
+        # Create an HTTP response with the correct content-type
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="chickens.csv"'
+
+        # Create a csv writer and write the header and data
+        writer = csv.writer(response)
+        
+        if data:
+            # Writing the header (keys of the dictionary)
+            writer.writerow(data[0].keys())
+
+            # Writing the data rows
+            for user in data:
+                writer.writerow(user.values())
+
+        return response
+    else:
+     
+        return JsonResponse({'users': data})
