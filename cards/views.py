@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from accounts.models import User, Skills, Project
-from cards.forms import UserInfoForm, UserSkillForm, UserProjectForm
+from cards.forms import UserInfoForm, UserSkillForm, UserProjectForm, DeleteAccountForm
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.http import HttpResponse, JsonResponse
 # API
 from accounts.models import User
@@ -16,6 +17,12 @@ def chicken_book(request):
 
 def about_project(request):
         return render(request, 'about_project.html')
+
+def bye_page(request):
+        return render(request, 'bye.html')
+    
+def wrong_password(request):
+        return render(request, 'wrong_password.html')
 
 def user_info(request, user_id):
     skills = Skills.objects.filter(user_id=user_id)
@@ -93,14 +100,16 @@ def project_list(request):
     context = {'projects': projects }
     return render(request, 'project_list.html', context)
 
-
-
 @login_required
 def edit_profile_form(request):
     user_instance = request.user
     form = UserInfoForm(instance=user_instance)
     
     if request.method == "POST":
+        
+        if 'delete_conf' in request.POST:  # Check if the delete action was triggered
+            return redirect('confirm_delete')  # Redirect to home or a specific page
+        
         form = UserInfoForm(request.POST, request.FILES, instance=user_instance)
         if form.is_valid():
             form.save()
@@ -112,6 +121,43 @@ def edit_profile_form(request):
     
     return render(request, 'edit_profile_form.html', context)
 
+@login_required
+def confirm_delete(request):
+    
+    confirm_delete_form = DeleteAccountForm()
+    
+    context = {
+        'delete_account_form': confirm_delete_form
+    }
+    
+    return render(request, 'confirm_delete.html', context)
+
+@login_required
+def acc_delete(request):
+    user_instance = request.user
+
+    if request.method == "POST":
+        # Get the plaintext password from the form
+        password_confirmation = request.POST.get('password_confirmation')
+        
+        # Use check_password to compare the password
+        if user_instance.check_password(password_confirmation):
+            user_instance.delete()  # Delete the user
+            logout(request)  # Log the user out
+            messages.success(request, 'Your account has been deleted successfully.')
+            # If you're using HTMX or need to force a redirect, adjust accordingly
+            response = HttpResponse(status=204)
+            response['HX-Redirect'] = '/bye'  # This tells HTMX to navigate to '/' on the client side
+            return response  # Redirect to home or a specific page  # Redirect to a goodbye page or home as needed
+        
+        else:
+            # You might want to redirect back to the form or stay on the page for another attempt
+            response = HttpResponse(status=204)
+            response['HX-Redirect'] = '/wrong-password'  # This tells HTMX to navigate to '/' on the client side
+            return response
+            
+    # If the request is not POST, just show the form again (or handle differently as needed)
+    return render(request, 'confirm_delete.html')
 
 # API ....mozno spravit vlastnu appku
 
@@ -162,3 +208,4 @@ def users_api_download(request):
     else:
      
         return JsonResponse({'users': data})
+    

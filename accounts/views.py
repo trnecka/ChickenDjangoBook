@@ -4,7 +4,6 @@ from django.urls import reverse_lazy
 from accounts.forms import RegistrationForm, CustomAuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.core.mail import EmailMultiAlternatives
-from django.conf import settings
 from django.template.loader import get_template
 
 ### These imports are for creating activation link
@@ -102,4 +101,5 @@ class VerificationPageView(View):
         except Exception as ex:
             pass
         return redirect('login')
+    
 

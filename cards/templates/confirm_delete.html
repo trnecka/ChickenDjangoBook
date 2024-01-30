@@ -1,0 +1,19 @@
+{% load crispy_forms_tags %}
+
+<form hx-post="{% url 'acc_delete' %}" class="modal-content">
+    {% csrf_token %}
+    <div class="modal-header">
+        <h2 class="modal-title">Delete Account</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+        
+    </div>
+    <div class="modal-body">
+        <p>!!! By submiting this form, your acc and all data will be lost !!!</p>
+        <p>If you are sure, type your password and hit button below.</p>
+        {{ delete_account_form|crispy }}
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-danger" name="delete_account">Confirm Delete Account</button>
+    </div>
+</form>

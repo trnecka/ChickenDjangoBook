@@ -10,8 +10,12 @@
     <div class="modal-body">
         {{ profile_form|crispy }}
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-primary" hx-refresh="true">Save profile</button>
+    <div class="modal-footer justify-content-between">
+        <button class="btn btn-outline-danger" name="delete_conf" href="{% url 'confirm_delete' %}">Delete Account</button>
+
+        <div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" hx-refresh="true">Save profile</button>
+        </div>
     </div>
 </form>
