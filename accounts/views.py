@@ -79,6 +79,9 @@ class RegistrationFormView(CreateView):
         return email_message.send()        
     
 class ChickenBookPasswordResetView(PasswordResetView):
+    """
+    Class displays the from for password recovery and processes it. It sending the email message.
+    """
     template_name = 'password_reset.html'
     subject_template_name = 'email/password_reset_email_subject.txt'
     email_template_name = 'email/password_reset_email.html'
@@ -88,13 +91,22 @@ class ChickenBookPasswordResetView(PasswordResetView):
         return super().form_valid(form)
     
 class ChickenBookPasswordResetDoneView(PasswordResetDoneView):
+    """
+    Class displays the message about sending email instruction.
+    """
     template_name = "password_reset_done.html"
     title = "Password change successful"
 
 class ChickenBookPasswordResetConfirmView(PasswordResetConfirmView):
+    """
+    Class displays the recovery password form after using the link in the email message.
+    """
     template_name = "password_reset_confirm.html"
     
 class ChickenBookPasswordResetCompleteView(PasswordResetCompleteView):
+    """
+    Class displays the message after successfull set new password.
+    """
     template_name = 'password_reset_complete.html'
     
 class CustomLoginView(LoginView):
