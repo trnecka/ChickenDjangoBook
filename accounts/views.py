@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.views.generic import CreateView, View
 from django.urls import reverse_lazy
 from accounts.forms import RegistrationForm, CustomAuthenticationForm
-from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView
+from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import get_template
@@ -92,7 +92,10 @@ class ChickenBookPasswordResetDoneView(PasswordResetDoneView):
     title = "Password change successful"
 
 class ChickenBookPasswordResetConfirmView(PasswordResetConfirmView):
-    pass
+    template_name = "password_reset_confirm.html"
+    
+class ChickenBookPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'password_reset_complete.html'
     
 class CustomLoginView(LoginView):
     template_name = 'login.html'
