@@ -9,7 +9,7 @@
     max-width: 450px;
 }
 
-/* body {
+body {
     background-color: #2d3338; 
     background-image: repeating-linear-gradient(
         45deg,
@@ -20,11 +20,15 @@
     );
     background-size: 650px 650px;
 
-} */
+}
 
 
 
 .card {
     backdrop-filter: blur(9px); /* Adjust the blur intensity as needed */
     background-color: rgba(33, 37, 41, 0); /* Semi-transparent background to enhance the blur effect */
+}
+
+.tech-icon {
+    height: 10px;
 }
