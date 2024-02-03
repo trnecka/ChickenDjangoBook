@@ -19,4 +19,8 @@ class UserProjectForm(forms.ModelForm):
         model = Project
         fields = ['project_name', 'project_link']
         
+class DeleteAccountForm(forms.Form):
+    
+    password_confirmation = forms.CharField(widget=forms.PasswordInput(), label="Confirm Your Password")
+
         

@@ -1,0 +1,20 @@
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.login-form, .registration-form {
+    max-width: 450px;
+}
+
+.card {
+    backdrop-filter: blur(9px); /* Adjust the blur intensity as needed */
+    background-color: rgba(33, 37, 41, 0); /* Semi-transparent background to enhance the blur effect */
+}
+
+.tech-icon {
+    height: 10px;
+}
+

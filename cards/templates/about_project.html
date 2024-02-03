@@ -1,6 +1,38 @@
 {% extends "main.html" %} {% block content %}
+{% load static %}
 
 <section>
-    <h1>TEXT O PROJEKTE</h1>
+    <h1>Project Info</h1>
+</br>
+    <h5> What ChickenBook is:</h5>
+    <div style="display: inline-block; text-align: justify;">
+    <p >ChickenBook is a collaborative venture conceived and developed by two passionate individuals who found common ground and a shared vision on juniorGuru, a platform dedicated to uniting junior programmers from Slovakia and the Czech Republic. Our journey began with a simple idea: to create a resource that resonates with the needs and aspirations of junior developers, a group to which we proudly belong.</p>
+    
+    <h5> Who we are and where we met:</h5>
+
+    <p>Two junior enthusiastic developers from Slovakia and Czech Republic. <a href="https://junior.guru/">Junior Guru</a> plays a pivotal role in our story, serving as the meeting point and the source of inspiration for ChickenBook. This platform is a beacon for juniors in the programming world, offering guidance, support, and a sense of community to those at the beginning of their tech careers in Slovakia and the Czech Republic. It's this spirit of community and collaboration that ChickenBook aims to embody and extend.</p>
+    
+    <h5>What is our journey about:</h5>
+
+    <p>Our experience in developing ChickenBook has been a journey of learning, challenges, and immense satisfaction. We've navigated the intricacies of web development, from conceptualization to deployment, and every step has been a valuable lesson in teamwork, perseverance, and the joy of creating something that can make a difference.</p>
+    
+    <h5>What we wish:</h5>
+
+    <p>As we continue to develop and enhance ChickenBook, our mission remains clear: to support and empower junior programmers in Slovakia and the Czech Republic, helping them navigate their early careers with confidence. We invite you to join us in this endeavor, whether by contributing your knowledge, sharing your experiences, or simply by making ChickenBook a part of your learning journey. Together, we can build a brighter future for every junior programmer.</p>
+
+    <h5>Technologies we use:</h5>
+    
+    <p>
+    <img style="height: 30px;" src="{% static 'techicons/python.svg' %}" alt="Python">    
+
+    <img style="height: 30px;" src="{% static 'techicons/django.svg' %}" alt="Django">
+
+    <img style="height: 30px;" src="{% static 'techicons/sqlite-icon.svg' %}" alt="SQL">
+
+    <img style="height: 25px;" src="{% static 'techicons/bootstrap.svg' %}" alt="Bootstrap">
+    </p>
+
+    <p>Technology-wise, ChickenBook is built on a foundation of robust and widely-used tools and frameworks to ensure a seamless and efficient user experience. We've utilized Django, a high-level Python web framework, for the backend, ensuring that our platform is secure, scalable, and versatile. For data management, SQLite provides us with a lightweight, yet powerful database solution that perfectly suits our needs. On the frontend, Bootstrap has been our choice for crafting an intuitive and responsive design, making ChickenBook accessible and user-friendly across all devices.</p>
+</div>
 </section>
 {% endblock content %}
