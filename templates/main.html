@@ -32,12 +32,16 @@
     <nav class="navbar bg-light navbar-expand-lg navbar-light bg-transparent">
       <div class="container">
         <a class="navbar-brand fs-4" href="/">chicken<b class="h2">Book.</b></a>
-        <a
-        href="{% url 'about_project' %}"
-        class="nav-item nav-link"
-        id="'about-project"
-        >About Project</a
-        >
+        <div class="form-check form-switch ps-5">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="themeSwitcher"
+          />
+          <label class="form-check-label" for="themeSwitcher"
+            >Light Mode</label
+          >
+        </div>
         <button
           class="navbar-toggler shadow-none border-0"
           type="button"
@@ -79,6 +83,13 @@
             <div
               class="d-flex justify-content-center align-items-center flex-column flex-lg-row gap-3"
             >
+            <a
+              href="{% url 'about_project' %}"
+              class="nav-item nav-link"
+              id="'about-project"
+              >About Project</a
+              >
+  
             <div class="dropdown">
               <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                   API
@@ -116,7 +127,7 @@
               >
               <a
                 href="{% url 'registration' %}"
-                class="text-light text-decoration-none px-3 py-1 rounded-2 border border-light"
+                class="nav-item nav-link px-3 py-1 rounded-2 border"
                 id="signUp"
                 >Register</a
               >
@@ -170,6 +181,7 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"
         ></script>
+
         <script>
           const modal = new bootstrap.Modal(document.getElementById("modal"));
 
@@ -185,6 +197,29 @@
               e.detail.shouldSwap = false;
               location.reload();
             }
+          });
+
+          document.addEventListener("DOMContentLoaded", function () {
+            let themeSwitcher = document.getElementById("themeSwitcher");
+            let bodyElement = document.body;
+        
+            // Check if the theme preference is stored in local storage
+            if (localStorage.getItem("theme") === "light") {
+              bodyElement.dataset.bsTheme = "light";
+              themeSwitcher.checked = true;
+            };
+        
+            // Add an event listener to the theme switcher checkbox
+            themeSwitcher.addEventListener("change", function () {
+              if (this.checked) {
+                bodyElement.dataset.bsTheme = "light";
+                localStorage.setItem("theme", "light");
+              } else {
+                bodyElement.dataset.bsTheme = "dark";
+                localStorage.setItem("theme", "dark");
+              }
+            });
+        
           });
         </script>
     </body>
