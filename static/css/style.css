@@ -5,7 +5,10 @@
     border-radius: 50%;
 }
 
-.login-form, .registration-form {
+.login-form, 
+.registration-form, 
+.password_reset_form,
+.password_reset_done {
     max-width: 450px;
 }
 
