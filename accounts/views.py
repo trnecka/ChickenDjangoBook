@@ -17,6 +17,10 @@ from .models import User
 from django.shortcuts import redirect
 from .utils import account_activation_token
 
+from django.conf import settings
+import os
+import re
+
 class RegistrationFormView(CreateView):
     template_name = 'registration.html'
     form_class = RegistrationForm
@@ -138,4 +142,11 @@ class VerificationPageView(View):
             pass
         return redirect('login')
     
-
+class ApiConfirmEmailLinkView(View):
+    def get(self, request, *args, **kwargs):
+        confirm_email = os.path.join(settings.EMAIL_FILE_PATH ,'selenium_confirm_email.txt')
+        with open(confirm_email, "r") as email:
+            text_email = email.read()
+        regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+        url_from_email = re.findall(regex, text_email)
+        return HttpResponse(url_from_email[0])
