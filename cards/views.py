@@ -9,22 +9,37 @@ from django.http import HttpResponse, JsonResponse
 from accounts.models import User
 import json, csv
 
-#main_page(chickenbook)
 def chicken_book(request):
+    '''
+    Main page(chickenbook) on ~/
+    
+    '''
     cards = User.objects.all()
     context = {'cards': cards }
     return render(request, 'chickenbook.html', context)
 
 def about_project(request):
-        return render(request, 'about_project.html')
+    '''
+    About project page on ~/about-project
+    '''
+    return render(request, 'about_project.html')
 
 def bye_page(request):
-        return render(request, 'bye.html')
+    '''
+    Bye Bye msg after succesfull deletion of the account
+    '''
+    return render(request, 'bye.html')
     
 def wrong_password(request):
-        return render(request, 'wrong_password.html')
+    '''
+    Wrong password message after unsuccessfull enter of password on delete acc action
+    '''
+    return render(request, 'wrong_password.html')
 
 def user_info(request, user_id):
+    '''
+    User Info view on main page (more info button)
+    '''
     skills = Skills.objects.filter(user_id=user_id)
     projects = Project.objects.filter(user_id=user_id)
     card = get_object_or_404(User, pk=user_id)
@@ -36,9 +51,12 @@ def user_info(request, user_id):
     
     return render(request, 'user_info.html', context)
 
-# user_profile
+
 @login_required
 def user_profile(request):
+    '''
+    User Profile page, with all Forms.
+    '''
     user_instance = request.user
     card = User.objects.get(pk=user_instance.id)
     
@@ -91,17 +109,26 @@ def user_profile(request):
 
 
 def skill_list(request):
+    '''
+    List of skills on Profile page
+    '''
     skills = Skills.objects.filter(user=request.user)
     context = {'skills': skills }
     return render(request, 'skill_list.html', context)
 
 def project_list(request):
+    '''
+    List of projects on Profile page
+    '''
     projects = Project.objects.filter(user=request.user)
     context = {'projects': projects }
     return render(request, 'project_list.html', context)
 
 @login_required
 def edit_profile_form(request):
+    '''
+    Edit profile form
+    '''
     user_instance = request.user
     form = UserInfoForm(instance=user_instance)
     
@@ -123,6 +150,9 @@ def edit_profile_form(request):
 
 @login_required
 def confirm_delete(request):
+    '''
+    Confirmation password form on delete acc action
+    '''
     
     confirm_delete_form = DeleteAccountForm()
     
@@ -134,6 +164,9 @@ def confirm_delete(request):
 
 @login_required
 def acc_delete(request):
+    '''
+    Actual Delete Account view
+    '''
     user_instance = request.user
 
     if request.method == "POST":
@@ -159,9 +192,10 @@ def acc_delete(request):
     # If the request is not POST, just show the form again (or handle differently as needed)
     return render(request, 'confirm_delete.html')
 
-# API ....mozno spravit vlastnu appku
-
 def serialize_users(queryset):
+    '''
+    Sserializer for users data for API/data what will show in generated querry
+    '''
     users_list = []
     for user in queryset:
         user_data = {
@@ -174,12 +208,17 @@ def serialize_users(queryset):
     return users_list
 
 def users_api_view(request):
-    
+    '''
+    HTTP response API view
+    '''
     users = User.objects.filter(is_visible=True)
     data = serialize_users(users)
     return JsonResponse({'users': data})
 
 def users_api_download(request):
+    '''
+    API download view JSON/CSV
+    '''
     format_type = request.GET.get('format', 'json')  # Default format is JSON
     users = User.objects.filter(is_visible=True)
     data = serialize_users(users)

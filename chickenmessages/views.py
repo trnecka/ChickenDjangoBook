@@ -5,6 +5,9 @@ from chickenmessages.models import Message
 from django.contrib import messages
 
 def send_message(request, recipient):
+    '''
+    Sending message
+    '''
     card = get_object_or_404(User, pk=recipient)
 
     # Initialize the form with sender's name and email if the user is logged in
@@ -32,11 +35,17 @@ def send_message(request, recipient):
     return render(request, 'send_message.html', context)
 
 def message_list(request):
+    '''
+    Message list for displaing all of users msg for every user 
+    '''
     messages = Message.objects.filter(recipient=request.user)
     context = {'private_messages': messages }
     return render(request, 'message_list.html', context)
 
 def message_detail(request, message_id):
+    '''
+    View for deatailed view of msg
+    '''
     message = get_object_or_404(Message, id=message_id)
 
     # Update the message status to 'Read' if it is 'Pending'
