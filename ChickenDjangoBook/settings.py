@@ -167,11 +167,10 @@ EMAIL_HOST_USER=os.environ.get('EMAIL_HOST_USER')
 
 if DEBUG == True:
     # Settings the email server for development
-    # EMAIL_BACKEND=os.environ.get('EMAIL_BACKEND_DEVELOPMENT')
-    # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-    EMAIL_BACKEND='tests.selenium_email_backend.SeleniumEmailBackend'
+    EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND_DEVELOPMENT')
     # only for saving email to the file
     EMAIL_FILE_PATH = BASE_DIR / os.environ.get('EMAIL_FILE_PATH')
+    EMAIL_FILENAME = os.environ.get('EMAIL_FILENAME')
 else:
     # Settings the email server for production
     EMAIL_BACKEND=os.environ.get('EMAIL_BACKEND_PRODUCTION')

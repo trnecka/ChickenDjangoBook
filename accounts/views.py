@@ -144,7 +144,7 @@ class VerificationPageView(View):
     
 class ApiConfirmEmailLinkView(View):
     def get(self, request, *args, **kwargs):
-        confirm_email = os.path.join(settings.EMAIL_FILE_PATH ,'selenium_confirm_email.txt')
+        confirm_email = os.path.join(settings.EMAIL_FILE_PATH ,settings.EMAIL_FILENAME)
         with open(confirm_email, "r") as email:
             text_email = email.read()
         regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
