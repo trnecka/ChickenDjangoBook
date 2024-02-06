@@ -46,18 +46,8 @@ class User(AbstractUser):
     instagram = models.URLField(max_length=100, blank=True, null=True)
     personal_web = models.URLField(max_length=100, blank=True, null=True)
  
-    # Zmensovanie img
+    # IMG SHRINKING
     def save(self, *args, **kwargs):
-        
-        # mazanie stareho img
-        # try:
-        #     old_image = User.objects.get(pk=self.pk).profile_image
-        #     if old_image.name != 'default-avatar.png':
-        #         old_image_path = os.path.join('media', old_image.name)
-        #         if os.path.isfile(old_image_path):
-        #             os.remove(old_image_path)
-        # except User.DoesNotExist:
-        #     pass
         
         super().save(*args, **kwargs)
         

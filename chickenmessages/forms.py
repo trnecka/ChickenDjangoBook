@@ -1,6 +1,7 @@
 from django import forms
 from chickenmessages.models import Message
 
+# Msg form
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
