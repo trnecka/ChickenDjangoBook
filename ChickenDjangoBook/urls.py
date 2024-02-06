@@ -18,13 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 # from cards.views import homepage
 import accounts.views
-from accounts.views import CustomLoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('account/register/', accounts.views.RegistrationFormView.as_view(), name='registration'),
-    path('account/login/', CustomLoginView.as_view(), name='login'),
-    path('account/', include('django.contrib.auth.urls')),
+    path('account/', include('accounts.urls')),
     path('', include('cards.urls')),
     path('', include('chickenmessages.urls')),
     path('activate/<uidb64>/<token>', accounts.views.VerificationPageView.as_view(), name='activate'),
@@ -34,4 +31,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 if settings.DEBUG:
+    urlpatterns += [
+        path('api-confirm-email-link/', accounts.views.ApiConfirmEmailLinkView.as_view())
+        ]
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

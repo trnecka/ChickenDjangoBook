@@ -1,8 +1,10 @@
+from typing import Any
 from django.contrib import messages
+from django.http import HttpResponse
 from django.views.generic import CreateView, View
 from django.urls import reverse_lazy
 from accounts.forms import RegistrationForm, CustomAuthenticationForm
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 
@@ -14,6 +16,10 @@ from django.urls import reverse
 from .models import User
 from django.shortcuts import redirect
 from .utils import account_activation_token
+
+from django.conf import settings
+import os
+import re
 
 class RegistrationFormView(CreateView):
     template_name = 'registration.html'
@@ -75,6 +81,37 @@ class RegistrationFormView(CreateView):
                 }), "text/html")
         return email_message.send()        
     
+class ChickenBookPasswordResetView(PasswordResetView):
+    """
+    Class displays the from for password recovery and processes it. It sending the email message.
+    """
+    template_name = 'password_reset.html'
+    subject_template_name = 'email/password_reset_email_subject.txt'
+    email_template_name = 'email/password_reset_email.html'
+    success_url = reverse_lazy("password_reset_done")
+    
+    def form_valid(self, form: Any) -> HttpResponse:
+        return super().form_valid(form)
+    
+class ChickenBookPasswordResetDoneView(PasswordResetDoneView):
+    """
+    Class displays the message about sending email instruction.
+    """
+    template_name = "password_reset_done.html"
+    title = "Password change successful"
+
+class ChickenBookPasswordResetConfirmView(PasswordResetConfirmView):
+    """
+    Class displays the recovery password form after using the link in the email message.
+    """
+    template_name = "password_reset_confirm.html"
+    
+class ChickenBookPasswordResetCompleteView(PasswordResetCompleteView):
+    """
+    Class displays the message after successfull set new password.
+    """
+    template_name = 'password_reset_complete.html'
+    
 class CustomLoginView(LoginView):
     template_name = 'login.html'
     form_class = CustomAuthenticationForm
@@ -85,6 +122,9 @@ class CustomLoginView(LoginView):
         response = super().form_valid(form)
         messages.success(self.request, 'Login successful!')
         return response
+    
+class ChickenLogoutView(LogoutView):
+    pass
 
 class VerificationPageView(View):
     def get(self, request, uidb64, token):
@@ -102,4 +142,20 @@ class VerificationPageView(View):
             pass
         return redirect('login')
     
+class ApiConfirmEmailLinkView(View):
+    """
+    API for the selenium.
+    """
+    def get(self, request, *args, **kwargs):
+        """
+        Separate confirmation link from email body.
 
+        Returns:
+            HttpResponse
+        """
+        confirm_email = os.path.join(settings.EMAIL_FILE_PATH ,settings.EMAIL_FILENAME)
+        with open(confirm_email, "r") as email:
+            text_email = email.read()
+        regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+        url_from_email = re.findall(regex, text_email)
+        return HttpResponse(url_from_email[0])
