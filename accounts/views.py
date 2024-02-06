@@ -143,7 +143,16 @@ class VerificationPageView(View):
         return redirect('login')
     
 class ApiConfirmEmailLinkView(View):
+    """
+    API for the selenium.
+    """
     def get(self, request, *args, **kwargs):
+        """
+        Separate confirmation link from email body.
+
+        Returns:
+            HttpResponse
+        """
         confirm_email = os.path.join(settings.EMAIL_FILE_PATH ,settings.EMAIL_FILENAME)
         with open(confirm_email, "r") as email:
             text_email = email.read()
