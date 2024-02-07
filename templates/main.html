@@ -115,6 +115,14 @@
               <a href="{% url 'user_profile' %}" class="mr-4 nav-item nav-link"
                 >Profile</a
               >
+              <div class="dropdown">
+                <button class="btn" type="button" id="dropdownSettingsMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-gear-fill"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownSettingsMenuButton">
+                  <li><a class="dropdown-item" href="#">Change password</a></li>
+                </ul>   
+              </div>
               <a
                 href="{% url 'logout' %}"
                 class="nav-item nav-link"
