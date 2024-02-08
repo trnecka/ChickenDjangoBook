@@ -161,7 +161,13 @@ class ApiConfirmEmailLinkView(View):
         return HttpResponse(url_from_email[0])
 
 class ChickenBookPasswordChangeView(PasswordChangeView):
+    """
+    Class displays the password change view, if the user is logged.
+    """
     template_name = 'password_change_form.html'
 
 class ChickenBookPasswordChangeDoneView(PasswordChangeDoneView):
+    """
+    Class which displas the information about the succesfully password changed.
+    """
     template_name = 'password_change_done.html'
