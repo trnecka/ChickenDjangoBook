@@ -17,6 +17,9 @@ from .models import User
 from django.shortcuts import redirect
 from .utils import account_activation_token
 
+# security
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
 from django.conf import settings
 import os
 import re
@@ -160,13 +163,13 @@ class ApiConfirmEmailLinkView(View):
         url_from_email = re.findall(regex, text_email)
         return HttpResponse(url_from_email[0])
 
-class ChickenBookPasswordChangeView(PasswordChangeView):
+class ChickenBookPasswordChangeView(LoginRequiredMixin, PermissionRequiredMixin, PasswordChangeView):
     """
     Class displays the password change view, if the user is logged.
     """
     template_name = 'password_change_form.html'
 
-class ChickenBookPasswordChangeDoneView(PasswordChangeDoneView):
+class ChickenBookPasswordChangeDoneView(LoginRequiredMixin, PermissionRequiredMixin, PasswordChangeDoneView):
     """
     Class which displas the information about the succesfully password changed.
     """
