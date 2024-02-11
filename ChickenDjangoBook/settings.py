@@ -140,13 +140,17 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+# It is not possible to use the constant STATIC_FILES and STATIC_ROOT at the same time,
+# therefore there is an IF ... ELSE clause
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static',
+        ]
+else:
+    STATIC_ROOT = BASE_DIR / 'static'
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-                    '/home/chickenbook/ChickenDjangoBook/static',
-                    BASE_DIR / 'static',
-                    ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
