@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.views.generic import CreateView, View
 from django.urls import reverse_lazy
 from accounts.forms import RegistrationForm, CustomAuthenticationForm
-from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, PasswordChangeDoneView, PasswordChangeView
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 
@@ -16,6 +16,9 @@ from django.urls import reverse
 from .models import User
 from django.shortcuts import redirect
 from .utils import account_activation_token
+
+# security
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from django.conf import settings
 import os
@@ -159,3 +162,15 @@ class ApiConfirmEmailLinkView(View):
         regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
         url_from_email = re.findall(regex, text_email)
         return HttpResponse(url_from_email[0])
+
+class ChickenBookPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+    """
+    Class displays the password change view, if the user is logged.
+    """
+    template_name = 'password_change_form.html'
+
+class ChickenBookPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
+    """
+    Class which displas the information about the succesfully password changed.
+    """
+    template_name = 'password_change_done.html'
