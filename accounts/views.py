@@ -25,11 +25,17 @@ import os
 import re
 
 class RegistrationFormView(CreateView):
+    """
+    Class creates the view for registration form in the ChickenBook
+    """
     template_name = 'registration.html'
     form_class = RegistrationForm
     success_url = reverse_lazy('login')
     
     def form_valid(self, form):
+        """
+        Send form if the form is valid
+        """
         response = super().form_valid(form)
         user = form.save(commit=False)
         user.is_active = False
@@ -116,6 +122,9 @@ class ChickenBookPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'password_reset_complete.html'
     
 class CustomLoginView(LoginView):
+    """
+    Class represented the login view for the ChickenBook
+    """
     template_name = 'login.html'
     form_class = CustomAuthenticationForm
     authentication_form = CustomAuthenticationForm
@@ -127,9 +136,15 @@ class CustomLoginView(LoginView):
         return response
     
 class ChickenLogoutView(LogoutView):
+    """
+    Class represented the logout view for the ChickenBook 
+    """
     pass
 
 class VerificationPageView(View):
+    """
+    Verification class view for the link which was sended by registration email.
+    """
     def get(self, request, uidb64, token):
         try:
             email = force_str(urlsafe_base64_decode(uidb64))
