@@ -163,13 +163,13 @@ class ApiConfirmEmailLinkView(View):
         url_from_email = re.findall(regex, text_email)
         return HttpResponse(url_from_email[0])
 
-class ChickenBookPasswordChangeView(LoginRequiredMixin, PermissionRequiredMixin, PasswordChangeView):
+class ChickenBookPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     """
     Class displays the password change view, if the user is logged.
     """
     template_name = 'password_change_form.html'
 
-class ChickenBookPasswordChangeDoneView(LoginRequiredMixin, PermissionRequiredMixin, PasswordChangeDoneView):
+class ChickenBookPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
     """
     Class which displas the information about the succesfully password changed.
     """
